@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# lapi core API
 lapi_modules_taken() {
   curl "https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey=$LAPIkey&AuthToken=$AuthToken&StudentID=$StudentID" | jq .
 }
@@ -20,28 +21,73 @@ lapi_downloadfile() {
 }
 
 modules_search() {
+  regex="($1/)|(/$1)|(^$1\$)"
   curl "https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=$LAPIkey&AuthToken=$AuthToken&IncludeAllInfo=false&ModuleCode=$1"\
-    | jq '.Results[] |
-    {
-      ID: .ID,
-      CourseCode: .CourseCode,
-      CourseName: .CourseName,
-      CourseAcadYear: .CourseAcadYear,
-      CourseSemester: .CourseSemester
-    }'
+    | jq --arg regex "$regex" '.Results[] | select(.CourseAcadYear == "2018/2019" and .CourseSemester == "Semester 2" and (.CourseCode | test($regex; "ix")))'\
+    | jq '{
+  ID: .ID,
+  CourseCode: .CourseCode,
+  CourseName: .CourseName,
+  CourseAcadYear: .CourseAcadYear,
+  CourseSemester: .CourseSemester}'
+}
+
+module_pad_ID() {
+  json_input=$(cat)
+  ModuleCode=$(echo $json_input | jq -r '.ModuleCode')
+  regex="($ModuleCode/)|(/$ModuleCode)|(^$ModuleCode\$)"
+  ID=$(curl "https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=$LAPIkey&AuthToken=$AuthToken&IncludeAllInfo=false&ModuleCode=$ModuleCode"\
+    | jq --arg regex "$regex" '.Results[] | select(.CourseAcadYear == "2018/2019" and .CourseSemester == "Semester 2" and (.CourseCode | test($regex; "ix")))'\
+    | jq -r '.ID')
+  echo $json_input | jq --arg id $ID '.+{ID: $id}'
+}
+
+modules_search_fuzzy() {
+  curl "https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=$LAPIkey&AuthToken=$AuthToken&IncludeAllInfo=false&ModuleCode=$1"\
+    | jq '.Results[] | select(.CourseAcadYear == "2018/2019" and .CourseSemester == "Semester 2")'\
+    | jq '{
+  ID: .ID,
+  CourseCode: .CourseCode,
+  CourseName: .CourseName,
+  CourseAcadYear: .CourseAcadYear,
+  CourseSemester: .CourseSemester}'\
+    | jq -s .
 }
 
 modules_taken() {
-  if [[ -f modules_taken.json ]]; then
+  if [[ -f modules_taken.json && "$1" == "" ]]; then
     < modules_taken.json jq .
   else
-    echo "=============================================="
-    echo "modules_taken.json does not exist, cURL-ing..."
-    echo "=============================================="
+    echo "======================================"
+    echo "cURL-ing your modules this semester..."
+    echo "======================================"
     curl "https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey=$LAPIkey&AuthToken=$AuthToken&StudentID=$StudentID"\
       | jq '.Results[] | select(.AcadYear == "2018/2019" and .Semester == "2")'\
+      | jq '{
+    ModuleCode: .ModuleCode,
+    ModuleTitle: .ModuleTitle}'\
       | jq -s .\
       | tee modules_taken.json
+  fi
+}
+
+fill_module_IDs() {
+  if [[ -f modules_taken.json ]]; then
+    json_input=$(< modules_taken.json)
+    i=0
+    for item in $(echo $json_input | jq -r '.[] | @base64'); do
+      ModuleCode=$(echo $item | base64 --decode | jq -r .ModuleCode)
+      echo $ModuleCode
+      regex="($ModuleCode/)|(/$ModuleCode)|(^$ModuleCode\$)"
+      echo $regex
+      ID=$(curl "https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=$LAPIkey&AuthToken=$AuthToken&IncludeAllInfo=false&ModuleCode=$ModuleCode"\
+        | jq --arg regex "$regex" '.Results[] | select(.CourseAcadYear == "2018/2019" and .CourseSemester == "Semester 2" and (.CourseCode | test($regex; "ix")))'\
+        | jq -r '.ID')
+      echo $ID
+      echo $item | base64 --decode | jq --arg id $ID '.+{ID: $id}' | tee xem$i.json
+      i=$((i+1))
+    done
+  else
   fi
 }
 
