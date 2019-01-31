@@ -1,0 +1,51 @@
+[
+  {
+    "ModuleCode": "CG3002",
+    "ModuleTitle": "Embedded Systems Design Project",
+    "AcadYear": "2018/2019",
+    "Semester": "2",
+    "SemesterDisplay": "Semester 2"
+  },
+  {
+    "ModuleCode": "CS2102",
+    "ModuleTitle": "Database Systems",
+    "AcadYear": "2018/2019",
+    "Semester": "2",
+    "SemesterDisplay": "Semester 2"
+  },
+  {
+    "ModuleCode": "EE4204",
+    "ModuleTitle": "Computer Networks",
+    "AcadYear": "2018/2019",
+    "Semester": "2",
+    "SemesterDisplay": "Semester 2"
+  },
+  {
+    "ModuleCode": "EG2401",
+    "ModuleTitle": "Engineering Professionalism",
+    "AcadYear": "2018/2019",
+    "Semester": "2",
+    "SemesterDisplay": "Semester 2"
+  },
+  {
+    "ModuleCode": "GES1002",
+    "ModuleTitle": "Global EC Dimensions of S'pore",
+    "AcadYear": "2018/2019",
+    "Semester": "2",
+    "SemesterDisplay": "Semester 2"
+  },
+  {
+    "ModuleCode": "MA1512",
+    "ModuleTitle": "Differential Equations for Engineering",
+    "AcadYear": "2018/2019",
+    "Semester": "2",
+    "SemesterDisplay": "Semester 2"
+  },
+  {
+    "ModuleCode": "MA1513",
+    "ModuleTitle": "Linear Algebra with Differential Equations",
+    "AcadYear": "2018/2019",
+    "Semester": "2",
+    "SemesterDisplay": "Semester 2"
+  }
+]
