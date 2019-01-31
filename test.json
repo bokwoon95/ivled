@@ -1,0 +1,82 @@
+[
+  {
+    "Title": "BigDaddy",
+    "Folders": [
+      {
+        "FolderName": "A",
+        "Folders": [
+        ],
+        "Files" : [
+          {
+            "FileName" : "A.a",
+            "FileType" : "docx",
+            "FileSize" : "",
+            "ID": ""
+          },
+          {
+            "FileName" : "A.b",
+            "FileType" : "pdf",
+            "FileSize" : "",
+            "ID": ""
+          },
+          {
+            "FileName" : "A.c",
+            "FileType" : "pptx",
+            "FileSize" : "",
+            "ID": ""
+          }
+        ]
+      },
+      {
+        "FolderName": "B",
+        "Folders": [
+        ],
+        "Files" : [
+          {
+            "FileName" : "B.a",
+            "FileType" : "docx",
+            "FileSize" : "",
+            "ID": ""
+          },
+          {
+            "FileName" : "B.b",
+            "FileType" : "pdf",
+            "FileSize" : "",
+            "ID": ""
+          },
+          {
+            "FileName" : "B.c",
+            "FileType" : "pptx",
+            "FileSize" : "",
+            "ID": ""
+          }
+        ]
+      },
+      {
+        "FolderName": "C",
+        "Folders": [
+        ],
+        "Files" : [
+          {
+            "FileName" : "C.a",
+            "FileType" : "docx",
+            "FileSize" : "",
+            "ID": ""
+          },
+          {
+            "FileName" : "C.b",
+            "FileType" : "pdf",
+            "FileSize" : "",
+            "ID": ""
+          },
+          {
+            "FileName" : "C.c",
+            "FileType" : "pptx",
+            "FileSize" : "",
+            "ID": ""
+          }
+        ]
+      }
+    ]
+  }
+]

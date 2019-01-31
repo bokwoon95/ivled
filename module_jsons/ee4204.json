@@ -1,0 +1,316 @@
+[
+  {
+    "ID": "b0e596af-7b3f-4fcc-a721-d568115b3ec8",
+    "Title": "COMPUTER NETWORKS",
+    "Creator": {
+      "UserID": "elegm",
+      "Name": "Mohan Gurusamy",
+      "Email": null,
+      "Title": null,
+      "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+      "AccountType": null,
+      "Photo": null
+    },
+    "Published": true,
+    "BadgeTool": 1,
+    "Folders": [
+      {
+        "ID": "806322e6-59a3-4974-ae92-a543e9d57e96",
+        "FolderName": "Lecture Notes",
+        "SortFilesBy": "Date",
+        "OpenDate": "/Date(1547191740000+0800)/",
+        "OpenDate_js": "2019-01-11T15:29:00",
+        "CloseDate": "/Date(1562830140000+0800)/",
+        "CloseDate_js": "2019-07-11T15:29:00",
+        "AllowUpload": false,
+        "AllowView": false,
+        "CommentOption": "1",
+        "FolderOrder": 1,
+        "FileCount": 9,
+        "UploadDisplayOption": "Name",
+        "Folders": [],
+        "Files": [
+          {
+            "ID": "1f8bc4a7-ca02-4291-b755-17b2f60de620",
+            "FileName": "EE4204-Jan-2019-Tutorial-1.pdf",
+            "FileDescription": "Tutorial 1 (to be discussed on Wednesday 30 January 2019)",
+            "FileSize": 28280,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "elegm",
+              "Name": "Mohan Gurusamy",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": false,
+            "UploadTime": "/Date(1548648053210+0800)/",
+            "UploadTime_js": "2019-01-28T12:00:53.21",
+            "Url": ""
+          },
+          {
+            "ID": "bed46284-ac37-429f-8e40-2a47bf75ac77",
+            "FileName": "EE4204-Jan-2019-Notes6.pdf",
+            "FileDescription": "Wireless LAN",
+            "FileSize": 1282755,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "elegm",
+              "Name": "Mohan Gurusamy",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1547537839550+0800)/",
+            "UploadTime_js": "2019-01-15T15:37:19.55",
+            "Url": ""
+          },
+          {
+            "ID": "1b9ddea0-5c15-4e0f-bf4b-03b51943369e",
+            "FileName": "EE4204-Jan-2019-Notes5.pdf",
+            "FileDescription": "Ethernet and Extended LAN",
+            "FileSize": 506159,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "elegm",
+              "Name": "Mohan Gurusamy",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1547537839487+0800)/",
+            "UploadTime_js": "2019-01-15T15:37:19.487",
+            "Url": ""
+          },
+          {
+            "ID": "e2cfdbf1-0c3c-40c4-b334-5531ef6b65a7",
+            "FileName": "EE4204-Jan-2019-Notes4.pdf",
+            "FileDescription": "Flow Control",
+            "FileSize": 192981,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "elegm",
+              "Name": "Mohan Gurusamy",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1547537775923+0800)/",
+            "UploadTime_js": "2019-01-15T15:36:15.923",
+            "Url": ""
+          },
+          {
+            "ID": "a65b6fc9-6066-4e37-85dd-509813f44704",
+            "FileName": "EE4204-Jan-2019-Notes3.pdf",
+            "FileDescription": "Framing and Error Control",
+            "FileSize": 165009,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "elegm",
+              "Name": "Mohan Gurusamy",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1547537775890+0800)/",
+            "UploadTime_js": "2019-01-15T15:36:15.89",
+            "Url": ""
+          },
+          {
+            "ID": "26c20617-3a7d-42b7-88e9-1884f00a1327",
+            "FileName": "EE4204-Jan-2019-Notes-2.ppt",
+            "FileDescription": "Networks Overview (Set 2)",
+            "FileSize": 1056768,
+            "FileType": "ppt",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "elegm",
+              "Name": "Mohan Gurusamy",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1547537775860+0800)/",
+            "UploadTime_js": "2019-01-15T15:36:15.86",
+            "Url": ""
+          },
+          {
+            "ID": "9b8ab351-5729-4930-870e-a176e9c73060",
+            "FileName": "EE4204-Jan-2019-Notes-1.ppt",
+            "FileDescription": "Lecture Notes 1",
+            "FileSize": 2032128,
+            "FileType": "ppt",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "elegm",
+              "Name": "Mohan Gurusamy",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1547191827300+0800)/",
+            "UploadTime_js": "2019-01-11T15:30:27.3",
+            "Url": ""
+          },
+          {
+            "ID": "83c9245c-d517-4f40-b167-632d42636289",
+            "FileName": "EE4204-Assessment.pptx",
+            "FileDescription": "Assessment Details",
+            "FileSize": 40354,
+            "FileType": "pptx",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "elegm",
+              "Name": "Mohan Gurusamy",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1547191827253+0800)/",
+            "UploadTime_js": "2019-01-11T15:30:27.253",
+            "Url": ""
+          },
+          {
+            "ID": "7bcd58c8-af62-46a4-915a-dbda480c28fb",
+            "FileName": "EE4204-Part1-syllabus.doc",
+            "FileDescription": "Part 1 Syllabus",
+            "FileSize": 27648,
+            "FileType": "doc",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "elegm",
+              "Name": "Mohan Gurusamy",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8465c65f-c58f-4b6c-a07c-5ee923d57d46",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1547191827220+0800)/",
+            "UploadTime_js": "2019-01-11T15:30:27.22",
+            "Url": ""
+          }
+        ]
+      }
+    ]
+  }
+]

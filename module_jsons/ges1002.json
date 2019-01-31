@@ -1,0 +1,130 @@
+[
+  {
+    "ID": "15a62335-70a1-4d7a-a48e-f9f452d0ea38",
+    "Title": "GLOBAL EC DIMENSIONS OF S'PORE",
+    "Creator": {
+      "UserID": "ecsccww",
+      "Name": "Chung Wee-Wee, Connie",
+      "Email": null,
+      "Title": null,
+      "UserGuid": "8e5dd3a9-c085-4c85-8165-79e4a25204cc",
+      "AccountType": null,
+      "Photo": null
+    },
+    "Published": true,
+    "BadgeTool": 0,
+    "Folders": [
+      {
+        "ID": "c23f8b9a-c20f-4ed9-a7fa-3697b04b3dbe",
+        "FolderName": "Lecture Notes",
+        "SortFilesBy": "Date",
+        "OpenDate": "/Date(1547526780000+0800)/",
+        "OpenDate_js": "2019-01-15T12:33:00",
+        "CloseDate": "/Date(1563165240000+0800)/",
+        "CloseDate_js": "2019-07-15T12:34:00",
+        "AllowUpload": false,
+        "AllowView": false,
+        "CommentOption": "1",
+        "FolderOrder": 1,
+        "FileCount": 3,
+        "UploadDisplayOption": "Name",
+        "Folders": [],
+        "Files": [
+          {
+            "ID": "a2666201-83da-45de-b38c-97f55fde96a1",
+            "FileName": "GES1002_SSA2220 - TOPIC 3 - Is Singapore a Developed Country.pptx",
+            "FileDescription": "Is Singapore a Developed Country?",
+            "FileSize": 7164612,
+            "FileType": "pptx",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "ecsccww",
+              "Name": "Chung Wee-Wee, Connie",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8e5dd3a9-c085-4c85-8165-79e4a25204cc",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1548664896013+0800)/",
+            "UploadTime_js": "2019-01-28T16:41:36.013",
+            "Url": ""
+          },
+          {
+            "ID": "8fd8ea4e-0315-48aa-a658-b45558da5f11",
+            "FileName": "GES1002_SSA2220 - TOPIC 2 - Overview of Development Strategies.pptx",
+            "FileDescription": "Overview of Development Strategies",
+            "FileSize": 10768867,
+            "FileType": "pptx",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "ecsccww",
+              "Name": "Chung Wee-Wee, Connie",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8e5dd3a9-c085-4c85-8165-79e4a25204cc",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1548068543643+0800)/",
+            "UploadTime_js": "2019-01-21T19:02:23.643",
+            "Url": ""
+          },
+          {
+            "ID": "5f3b3a51-e0c5-4a40-aa20-5084e9ae77f7",
+            "FileName": "GES1002_SSA2220 - TOPIC 1 - Introduction to the Singapore Economy.pptx",
+            "FileDescription": "Introduction to the Singapore Economy",
+            "FileSize": 5523343,
+            "FileType": "pptx",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "ecsccww",
+              "Name": "Chung Wee-Wee, Connie",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8e5dd3a9-c085-4c85-8165-79e4a25204cc",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": true,
+            "UploadTime": "/Date(1547528126233+0800)/",
+            "UploadTime_js": "2019-01-15T12:55:26.233",
+            "Url": ""
+          }
+        ]
+      }
+    ]
+  }
+]
