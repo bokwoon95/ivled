@@ -1,30 +1,37 @@
 [
   {
     "ModuleCode": "CG3002",
-    "ModuleTitle": "Embedded Systems Design Project"
+    "ModuleTitle": "Embedded Systems Design Project",
+    "ID": "417770fc-b119-488d-8c4b-bb70b88d7ac5"
   },
   {
     "ModuleCode": "CS2102",
-    "ModuleTitle": "Database Systems"
+    "ModuleTitle": "Database Systems",
+    "ID": "8f2c5b07-a5be-4d86-bb1c-8839d5b72292"
   },
   {
     "ModuleCode": "EE4204",
-    "ModuleTitle": "Computer Networks"
+    "ModuleTitle": "Computer Networks",
+    "ID": "fb80965b-191c-49c3-aa30-a5c890615721"
   },
   {
     "ModuleCode": "EG2401",
-    "ModuleTitle": "Engineering Professionalism"
+    "ModuleTitle": "Engineering Professionalism",
+    "ID": "f559e6e3-eb62-45b4-97e3-cbdb57710eae"
   },
   {
     "ModuleCode": "GES1002",
-    "ModuleTitle": "Global EC Dimensions of S'pore"
+    "ModuleTitle": "Global EC Dimensions of S'pore",
+    "ID": "1c752f6a-52f7-45f4-8a06-2d8b39878593"
   },
   {
     "ModuleCode": "MA1512",
-    "ModuleTitle": "Differential Equations for Engineering"
+    "ModuleTitle": "Differential Equations for Engineering",
+    "ID": "7d6b57ce-4fd6-4f63-b94e-08c6306f985d"
   },
   {
     "ModuleCode": "MA1513",
-    "ModuleTitle": "Linear Algebra with Differential Equations"
+    "ModuleTitle": "Linear Algebra with Differential Equations",
+    "ID": "08794bbd-b65a-4389-ad06-078b09fc729e"
   }
 ]

@@ -1,0 +1,8 @@
+✓ A function that generates a json array of this semester's modules together with the module ID (and cache it into a 'modules_taken.json' file). With the unique ID of each module, I can
+✗ Write all temporary json files into a /tmp folder and clean up after you're done
+    Writing to a /tmp folder also helps to avoid deleting other people's json files that match 'temp*.json'
+
+Possible Failures
+=================
+✗ The module searching by regex might throw up either no results, or more than one result. Right now I'm assuming it will always return only one result. This assumption needs to be tested with a wide range of other people's modules.
+    Possibly implement a failsafe that throws an error when no results are found, and (intelligently) selects one result if there are multiple results found.
