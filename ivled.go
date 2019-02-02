@@ -15,18 +15,18 @@ var json = jsoniter.ConfigFastest
 var ivleroot = os.ExpandEnv("$HOME/nus")
 
 type HomoFolder struct {
-	Results []HomoFolder `json:"Results"`
+	Results []HomoFolder `json:"Results,omitempty"`
 
-	Title string `json:"Title"`
+	Title string `json:"Title,omitempty"`
 
-	FolderName string `json:"FolderName"`
-	Folders    []HomoFolder `json:"Folders"`
-	Files      []HomoFolder `json:"Files"`
+	FolderName string `json:"FolderName,omitempty"`
+	Folders    []HomoFolder `json:"Folders,omitempty"`
+	Files      []HomoFolder `json:"Files,omitempty"`
 
-	FileName string `json:"FileName"`
-	FileType string `json:"FIleType"`
-	FileSize int `json:"FileSize"`
-	ID       string `json:"ID"`
+	FileName string `json:"FileName,omitempty"`
+	FileType string `json:"FIleType,omitempty"`
+	FileSize int `json:"FileSize,omitempty"`
+	ID       string `json:"ID,omitempty"`
 }
 
 type PreStruct struct {
@@ -56,10 +56,10 @@ func main() {
 	cprint(homofolders)
 
 	// cprint(bigfolder[0])
-	for _, hf := range bigfolder {
-		walk(hf)
-	}
-	// walk(homofolders)
+	// for _, hf := range bigfolder {
+	// 	walk(hf)
+	// }
+	walk(homofolders)
 
 	// fileurl := os.ExpandEnv("https://ivle.nus.edu.sg/api/downloadfile.ashx?APIKey=$LAPIkey&AuthToken=$AuthToken&ID=5444db22-b035-406a-9c46-2cdac6e30bd3&target=workbin")
 	// if err := DownloadFile("yee.pdf", fileurl); err != nil {

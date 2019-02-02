@@ -6,6 +6,9 @@
     ✓ Kind of achieved with a union struct, a very ugly solution
 
 ✗ Why is Unmarshal() blatantly ignoring certain elements in my Results[] json array?
+    • What I will try next is
+    "Cool trick: you can parse the same JSON using multiple structs, to adjust to different contents dynamically this way."
+    Instead of reading it into a recursive homofolder struct, I can recursively parse the json. Arrays of unknown contents will simply be parsed as '[]json.RawMessage', which I can iterate over at my own leisure(https://stackoverflow.com/a/52250578).
 
 Resources
 =========
