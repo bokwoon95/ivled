@@ -12,7 +12,7 @@
       "Photo": null
     },
     "Published": true,
-    "BadgeTool": 6,
+    "BadgeTool": 9,
     "Folders": [
       {
         "ID": "299717d6-6422-4786-ad9b-80310c4ec09c",
@@ -56,7 +56,7 @@
               "AccountType": null,
               "Photo": null
             },
-            "isDownloaded": false,
+            "isDownloaded": true,
             "UploadTime": "/Date(1548809084537+0800)/",
             "UploadTime_js": "2019-01-30T08:44:44.537",
             "Url": ""
@@ -168,10 +168,72 @@
         "AllowView": true,
         "CommentOption": "1",
         "FolderOrder": 2,
-        "FileCount": 1,
+        "FileCount": 3,
         "UploadDisplayOption": "Name",
         "Folders": [],
         "Files": [
+          {
+            "ID": "3080191c-a679-47b5-8348-497f0a822124",
+            "FileName": "tut-er.pdf",
+            "FileDescription": "Week 4 Tutorial: ER Model",
+            "FileSize": 205087,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "dcsccy",
+              "Name": "Chan Chee Yong",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "57f34188-75bb-45db-9234-c65dd69b001e",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": false,
+            "UploadTime": "/Date(1549014332490+0800)/",
+            "UploadTime_js": "2019-02-01T17:45:32.49",
+            "Url": ""
+          },
+          {
+            "ID": "c2f1a526-3307-46ed-959e-d50f5dfca5ef",
+            "FileName": "tut-relational-soln.pdf",
+            "FileDescription": "Week 3 Tutorial Solution",
+            "FileSize": 36472,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "dcsccy",
+              "Name": "Chan Chee Yong",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "57f34188-75bb-45db-9234-c65dd69b001e",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": false,
+            "UploadTime": "/Date(1549014332473+0800)/",
+            "UploadTime_js": "2019-02-01T17:45:32.473",
+            "Url": ""
+          },
           {
             "ID": "801661dc-a8a8-49ac-adab-e91e5feb1195",
             "FileName": "tut-relational.pdf",
@@ -198,7 +260,7 @@
               "AccountType": null,
               "Photo": null
             },
-            "isDownloaded": false,
+            "isDownloaded": true,
             "UploadTime": "/Date(1548126299457+0800)/",
             "UploadTime_js": "2019-01-22T11:04:59.457",
             "Url": ""
@@ -266,33 +328,16 @@
         "AllowView": true,
         "CommentOption": "1",
         "FolderOrder": 4,
-        "FileCount": 0,
+        "FileCount": 3,
         "UploadDisplayOption": "Name",
-        "Folders": [],
-        "Files": []
-      },
-      {
-        "ID": "3f675ee2-2477-4055-9b14-29a059286d2a",
-        "FolderName": "Assignment 1 Submissions",
-        "SortFilesBy": "Date",
-        "OpenDate": "/Date(1547222400000+0800)/",
-        "OpenDate_js": "2019-01-12T00:00:00",
-        "CloseDate": "/Date(1559577540000+0800)/",
-        "CloseDate_js": "2019-06-03T23:59:00",
-        "AllowUpload": true,
-        "AllowView": true,
-        "CommentOption": "1",
-        "FolderOrder": 5,
-        "FileCount": 1,
-        "UploadDisplayOption": "Matrix",
         "Folders": [],
         "Files": [
           {
-            "ID": "d029a49f-7fd1-453f-9c94-e42daae08ed1",
-            "FileName": "q1.go",
-            "FileDescription": "",
-            "FileSize": 512,
-            "FileType": "go",
+            "ID": "62d0884d-e3f9-4745-8351-8fb44c425b4e",
+            "FileName": "project.pdf",
+            "FileDescription": "Project List",
+            "FileSize": 77730,
+            "FileType": "pdf",
             "FileRemarks": "",
             "FileRemarksAttachment": "",
             "Commenter": {
@@ -305,20 +350,99 @@
               "Photo": null
             },
             "Creator": {
-              "UserID": "e0031874",
-              "Name": "CHUA BOK WOON",
+              "UserID": "dcsaysp",
+              "Name": "Adi Yoga Sidi Prabawa",
               "Email": null,
               "Title": null,
-              "UserGuid": "e6d28c9a-d00b-4e33-a9f9-c2161a7217b2",
+              "UserGuid": "52a84170-f76a-4ead-8c02-95dbfa123c4f",
               "AccountType": null,
               "Photo": null
             },
-            "isDownloaded": true,
-            "UploadTime": "/Date(1548078755617+0800)/",
-            "UploadTime_js": "2019-01-21T21:52:35.617",
+            "isDownloaded": false,
+            "UploadTime": "/Date(1549034228667+0800)/",
+            "UploadTime_js": "2019-02-01T23:17:08.667",
+            "Url": ""
+          },
+          {
+            "ID": "126f11df-2d9a-48ef-b670-3ef6a2c336f5",
+            "FileName": "guide_files.zip",
+            "FileDescription": "Files used in start_guide.pdf",
+            "FileSize": 18531,
+            "FileType": "zip",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "dcsaysp",
+              "Name": "Adi Yoga Sidi Prabawa",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "52a84170-f76a-4ead-8c02-95dbfa123c4f",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": false,
+            "UploadTime": "/Date(1549034228633+0800)/",
+            "UploadTime_js": "2019-02-01T23:17:08.633",
+            "Url": ""
+          },
+          {
+            "ID": "402bb107-4089-4231-bd4d-94b64c22b722",
+            "FileName": "start_guide.pdf",
+            "FileDescription": "PostgreSQL - NodeJS - Bootstrap\r\nwith Express and EJS",
+            "FileSize": 404405,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "dcsaysp",
+              "Name": "Adi Yoga Sidi Prabawa",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "52a84170-f76a-4ead-8c02-95dbfa123c4f",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": false,
+            "UploadTime": "/Date(1549034228587+0800)/",
+            "UploadTime_js": "2019-02-01T23:17:08.587",
             "Url": ""
           }
         ]
+      },
+      {
+        "ID": "3f675ee2-2477-4055-9b14-29a059286d2a",
+        "FolderName": "Assignment 1 Submissions",
+        "SortFilesBy": "Date",
+        "OpenDate": "/Date(1541040060000+0800)/",
+        "OpenDate_js": "2018-11-01T10:41:00",
+        "CloseDate": "/Date(1548988800000+0800)/",
+        "CloseDate_js": "2019-02-01T10:40:00",
+        "AllowUpload": false,
+        "AllowView": true,
+        "CommentOption": "1",
+        "FolderOrder": 5,
+        "FileCount": 0,
+        "UploadDisplayOption": "Matrix",
+        "Folders": [],
+        "Files": []
       },
       {
         "ID": "1b73e7f8-b836-418c-a4f5-b7c601bb9d8b",
@@ -332,10 +456,41 @@
         "AllowView": true,
         "CommentOption": "1",
         "FolderOrder": 6,
-        "FileCount": 2,
+        "FileCount": 3,
         "UploadDisplayOption": "Name",
         "Folders": [],
         "Files": [
+          {
+            "ID": "0cc52216-67d3-426c-b7bd-bb42b607e8ce",
+            "FileName": "announce-week3.pdf",
+            "FileDescription": "Week 3 Announcements",
+            "FileSize": 55139,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "dcsccy",
+              "Name": "Chan Chee Yong",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "57f34188-75bb-45db-9234-c65dd69b001e",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": false,
+            "UploadTime": "/Date(1548987322497+0800)/",
+            "UploadTime_js": "2019-02-01T10:15:22.497",
+            "Url": ""
+          },
           {
             "ID": "fd5d1ca1-33b5-4454-b0ad-27009702f725",
             "FileName": "announce-week2.pdf",
@@ -473,12 +628,80 @@
               "AccountType": null,
               "Photo": null
             },
-            "isDownloaded": false,
+            "isDownloaded": true,
             "UploadTime": "/Date(1548380683380+0800)/",
             "UploadTime_js": "2019-01-25T09:44:43.38",
             "Url": ""
           }
         ]
+      },
+      {
+        "ID": "c199e2c7-d1c1-49e6-8e28-75e4ec5f5f16",
+        "FolderName": "Project-Code-Submission",
+        "SortFilesBy": "Date",
+        "OpenDate": "/Date(1554652800000+0800)/",
+        "OpenDate_js": "2019-04-08T00:00:00",
+        "CloseDate": "/Date(1555077600000+0800)/",
+        "CloseDate_js": "2019-04-12T22:00:00",
+        "AllowUpload": true,
+        "AllowView": true,
+        "CommentOption": "1",
+        "FolderOrder": 8,
+        "FileCount": 0,
+        "UploadDisplayOption": "Matrix",
+        "Folders": [],
+        "Files": []
+      },
+      {
+        "ID": "e61426e8-75c9-4b70-a570-70ed1b80252f",
+        "FolderName": "Project-Report-Submission",
+        "SortFilesBy": "Date",
+        "OpenDate": "/Date(1554048000000+0800)/",
+        "OpenDate_js": "2019-04-01T00:00:00",
+        "CloseDate": "/Date(1555077600000+0800)/",
+        "CloseDate_js": "2019-04-12T22:00:00",
+        "AllowUpload": true,
+        "AllowView": true,
+        "CommentOption": "1",
+        "FolderOrder": 9,
+        "FileCount": 0,
+        "UploadDisplayOption": "Matrix",
+        "Folders": [],
+        "Files": []
+      },
+      {
+        "ID": "7768f9dd-fd32-4820-9d65-3e160e0d273b",
+        "FolderName": "Late-Project-Code-Submission",
+        "SortFilesBy": "Date",
+        "OpenDate": "/Date(1555077600000+0800)/",
+        "OpenDate_js": "2019-04-12T22:00:00",
+        "CloseDate": "/Date(1555250400000+0800)/",
+        "CloseDate_js": "2019-04-14T22:00:00",
+        "AllowUpload": true,
+        "AllowView": true,
+        "CommentOption": "1",
+        "FolderOrder": 10,
+        "FileCount": 0,
+        "UploadDisplayOption": "Matrix",
+        "Folders": [],
+        "Files": []
+      },
+      {
+        "ID": "89938ffe-1799-4211-9477-6f0cd617fc1a",
+        "FolderName": "Late-Project-Report-Submission",
+        "SortFilesBy": "Date",
+        "OpenDate": "/Date(1555077600000+0800)/",
+        "OpenDate_js": "2019-04-12T22:00:00",
+        "CloseDate": "/Date(1555250400000+0800)/",
+        "CloseDate_js": "2019-04-14T22:00:00",
+        "AllowUpload": true,
+        "AllowView": true,
+        "CommentOption": "1",
+        "FolderOrder": 11,
+        "FileCount": 0,
+        "UploadDisplayOption": "Matrix",
+        "Folders": [],
+        "Files": []
       }
     ]
   }

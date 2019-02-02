@@ -12,11 +12,11 @@
       "Photo": null
     },
     "Published": true,
-    "BadgeTool": 0,
+    "BadgeTool": 1,
     "Folders": [
       {
         "ID": "c23f8b9a-c20f-4ed9-a7fa-3697b04b3dbe",
-        "FolderName": "Lecture Notes",
+        "FolderName": "LECTURE SLIDES",
         "SortFilesBy": "Date",
         "OpenDate": "/Date(1547526780000+0800)/",
         "OpenDate_js": "2019-01-15T12:33:00",
@@ -121,6 +121,55 @@
             "isDownloaded": true,
             "UploadTime": "/Date(1547528126233+0800)/",
             "UploadTime_js": "2019-01-15T12:55:26.233",
+            "Url": ""
+          }
+        ]
+      },
+      {
+        "ID": "3def8680-e774-483b-b188-b64db6e05e93",
+        "FolderName": "GROUP ASSIGNMENTS",
+        "SortFilesBy": "Date",
+        "OpenDate": "/Date(1549036800000+0800)/",
+        "OpenDate_js": "2019-02-02T00:00:00",
+        "CloseDate": "/Date(1561906800000+0800)/",
+        "CloseDate_js": "2019-06-30T23:00:00",
+        "AllowUpload": false,
+        "AllowView": true,
+        "CommentOption": "1",
+        "FolderOrder": 2,
+        "FileCount": 1,
+        "UploadDisplayOption": "Name",
+        "Folders": [],
+        "Files": [
+          {
+            "ID": "d953e641-2899-4bce-b09f-4b759b5aa0ce",
+            "FileName": "GES1002_SSA2220 - Instructions on Submissions.docx",
+            "FileDescription": "Instructions on Submissions",
+            "FileSize": 28080,
+            "FileType": "docx",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "ecsccww",
+              "Name": "Chung Wee-Wee, Connie",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "8e5dd3a9-c085-4c85-8165-79e4a25204cc",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": false,
+            "UploadTime": "/Date(1549091855783+0800)/",
+            "UploadTime_js": "2019-02-02T15:17:35.783",
             "Url": ""
           }
         ]

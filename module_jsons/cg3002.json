@@ -26,10 +26,72 @@
         "AllowView": false,
         "CommentOption": "1",
         "FolderOrder": 1,
-        "FileCount": 10,
+        "FileCount": 12,
         "UploadDisplayOption": "Name",
         "Folders": [],
         "Files": [
+          {
+            "ID": "bca0affd-2f8a-491d-b62f-bc65e2d547f7",
+            "FileName": "ML_CG3002.pdf",
+            "FileDescription": "Walkthrough of scikit-learn and weka examples",
+            "FileSize": 2154705,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "dcspls",
+              "Name": "Peh Li Shiuan",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "294568a3-96b3-47ef-a0d8-a04abedf64df",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": false,
+            "UploadTime": "/Date(1548988895567+0800)/",
+            "UploadTime_js": "2019-02-01T10:41:35.567",
+            "Url": ""
+          },
+          {
+            "ID": "a0791263-4d5a-4b7f-9da6-cedc00ad85eb",
+            "FileName": "cg3002lect4machinelearning.pdf",
+            "FileDescription": "",
+            "FileSize": 1026500,
+            "FileType": "pdf",
+            "FileRemarks": "",
+            "FileRemarksAttachment": "",
+            "Commenter": {
+              "UserID": null,
+              "Name": null,
+              "Email": null,
+              "Title": null,
+              "UserGuid": "00000000-0000-0000-0000-000000000000",
+              "AccountType": null,
+              "Photo": null
+            },
+            "Creator": {
+              "UserID": "dcspls",
+              "Name": "Peh Li Shiuan",
+              "Email": null,
+              "Title": null,
+              "UserGuid": "294568a3-96b3-47ef-a0d8-a04abedf64df",
+              "AccountType": null,
+              "Photo": null
+            },
+            "isDownloaded": false,
+            "UploadTime": "/Date(1548988866700+0800)/",
+            "UploadTime_js": "2019-02-01T10:41:06.7",
+            "Url": ""
+          },
           {
             "ID": "e3550406-370c-40fa-b20d-38062daecc4f",
             "FileName": "CG3002_Design Report Template_Jan2019.docx",
@@ -118,7 +180,7 @@
               "AccountType": null,
               "Photo": null
             },
-            "isDownloaded": false,
+            "isDownloaded": true,
             "UploadTime": "/Date(1548750652453+0800)/",
             "UploadTime_js": "2019-01-29T16:30:52.453",
             "Url": ""
@@ -149,7 +211,7 @@
               "AccountType": null,
               "Photo": null
             },
-            "isDownloaded": false,
+            "isDownloaded": true,
             "UploadTime": "/Date(1548750630953+0800)/",
             "UploadTime_js": "2019-01-29T16:30:30.953",
             "Url": ""

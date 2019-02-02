@@ -1,8 +1,11 @@
-✗ Unmarshal a simple json structure from a file
+✓ Unmarshal a simple json structure from a file
 
-✗ Unmarshal an array of simple json structures from a file
+✓ Unmarshal an array of simple json structures from a file
 
-✗ Unmarshal an array of json structures (that can be one of two types) from a file
+✓ Unmarshal an array of json structures (that can be one of two types) from a file
+    ✓ Kind of achieved with a union struct, a very ugly solution
+
+✗ Why is Unmarshal() blatantly ignoring certain elements in my Results[] json array?
 
 Resources
 =========
@@ -15,7 +18,6 @@ https://coderwall.com/p/4c2zig/decode-top-level-json-array-into-a-slice-of-struc
 • simplejson
 https://godoc.org/github.com/bitly/go-simplejson
 
-=======
 lapi.sh
 =======
 

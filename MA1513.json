@@ -1,0 +1,796 @@
+{
+  "Results": [
+    {
+      "ID": "561a458d-4e7b-488b-8bb8-181bcf3448e6",
+      "Title": "LINEAR ALGEBRA WITH DIFFERENTIAL EQUATIONS",
+      "Creator": {
+        "UserID": "mattanv",
+        "Name": "Victor Tan",
+        "Email": null,
+        "Title": null,
+        "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+        "AccountType": null,
+        "Photo": null
+      },
+      "Published": true,
+      "BadgeTool": 12,
+      "Folders": [
+        {
+          "ID": "9bc1d899-b32b-4779-9e91-d086c14e6151",
+          "FolderName": "Video Slides",
+          "SortFilesBy": "Date",
+          "OpenDate": "/Date(1547099160000+0800)/",
+          "OpenDate_js": "2019-01-10T13:46:00",
+          "CloseDate": "/Date(1562737560000+0800)/",
+          "CloseDate_js": "2019-07-10T13:46:00",
+          "AllowUpload": false,
+          "AllowView": false,
+          "CommentOption": "1",
+          "FolderOrder": 1,
+          "FileCount": 9,
+          "UploadDisplayOption": "Name",
+          "Folders": [],
+          "Files": [
+            {
+              "ID": "7f9b8deb-7111-4efd-88f6-cff3e0197476",
+              "FileName": "Chapter 3 Video Slide Deck.pdf",
+              "FileDescription": "",
+              "FileSize": 1191029,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1548986026000+0800)/",
+              "UploadTime_js": "2019-02-01T09:53:46",
+              "Url": ""
+            },
+            {
+              "ID": "265683cd-fa7f-4e48-aed4-4a1091ccad5d",
+              "FileName": "Chapter 3 Summary Note.pdf",
+              "FileDescription": "",
+              "FileSize": 144741,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1548983670363+0800)/",
+              "UploadTime_js": "2019-02-01T09:14:30.363",
+              "Url": ""
+            },
+            {
+              "ID": "4f022cda-c1d1-4ef6-8217-9c7513496612",
+              "FileName": "Chapter 3 Lecture Note (Complete).pdf",
+              "FileDescription": "",
+              "FileSize": 757748,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1548983670333+0800)/",
+              "UploadTime_js": "2019-02-01T09:14:30.333",
+              "Url": ""
+            },
+            {
+              "ID": "9af9c000-83a2-4e37-b148-3b9eeb2f7689",
+              "FileName": "Chapter 2 Video Slide Deck.pdf",
+              "FileDescription": "",
+              "FileSize": 1364269,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1547678115177+0800)/",
+              "UploadTime_js": "2019-01-17T06:35:15.177",
+              "Url": ""
+            },
+            {
+              "ID": "a27ebd89-ae95-410e-a7b1-1fc1c69f703e",
+              "FileName": "Chapter 2 Summary Note.pdf",
+              "FileDescription": "",
+              "FileSize": 151944,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1547678115067+0800)/",
+              "UploadTime_js": "2019-01-17T06:35:15.067",
+              "Url": ""
+            },
+            {
+              "ID": "f7f88801-89fd-4db5-bce3-91d2198ae2fd",
+              "FileName": "Chapter 2 Lecture Note (Complete).pdf",
+              "FileDescription": "",
+              "FileSize": 1710087,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1547678115037+0800)/",
+              "UploadTime_js": "2019-01-17T06:35:15.037",
+              "Url": ""
+            },
+            {
+              "ID": "b48a9f4f-9555-4fb1-a051-dd257f0e7176",
+              "FileName": "Chapter 1 Video Slide Deck.pdf",
+              "FileDescription": "",
+              "FileSize": 921459,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1547159845163+0800)/",
+              "UploadTime_js": "2019-01-11T06:37:25.163",
+              "Url": ""
+            },
+            {
+              "ID": "42ef6b3f-2e36-433f-aa08-94a4a5feaa1d",
+              "FileName": "Chapter 1 Summary Note.pdf",
+              "FileDescription": "",
+              "FileSize": 177564,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1547159845103+0800)/",
+              "UploadTime_js": "2019-01-11T06:37:25.103",
+              "Url": ""
+            },
+            {
+              "ID": "d838fab4-31f3-4742-b9d6-4a7e6d8b2d5e",
+              "FileName": "Chapter 1 Lecture Note (Complete).pdf",
+              "FileDescription": "",
+              "FileSize": 1278649,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1547159845057+0800)/",
+              "UploadTime_js": "2019-01-11T06:37:25.057",
+              "Url": ""
+            }
+          ]
+        },
+        {
+          "ID": "f33e7ca1-1cfa-4954-9266-a69b37bb0d3c",
+          "FolderName": "F2F Lecture Slides",
+          "SortFilesBy": "Date",
+          "OpenDate": "/Date(1547049600000+0800)/",
+          "OpenDate_js": "2019-01-10T00:00:00",
+          "CloseDate": "/Date(1557590340000+0800)/",
+          "CloseDate_js": "2019-05-11T23:59:00",
+          "AllowUpload": false,
+          "AllowView": true,
+          "CommentOption": "1",
+          "FolderOrder": 2,
+          "FileCount": 5,
+          "UploadDisplayOption": "Name",
+          "Folders": [],
+          "Files": [
+            {
+              "ID": "7be3e973-28d6-4654-81c7-d769e1e0f789",
+              "FileName": "Lecture 3 (complete).pdf",
+              "FileDescription": "Complete version of lecture 3",
+              "FileSize": 435233,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1549024412200+0800)/",
+              "UploadTime_js": "2019-02-01T20:33:32.2",
+              "Url": ""
+            },
+            {
+              "ID": "d9b79a83-d20a-47ad-b6de-47db85d257c5",
+              "FileName": "Lecture 3 slides.pdf",
+              "FileDescription": "Face to face lecture in week 3",
+              "FileSize": 390904,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1548663132837+0800)/",
+              "UploadTime_js": "2019-01-28T16:12:12.837",
+              "Url": ""
+            },
+            {
+              "ID": "72802fcf-5066-45c7-9bc6-3b4530967939",
+              "FileName": "Lecture 2 (complete).pdf",
+              "FileDescription": "Complete version of lecture 2",
+              "FileSize": 540652,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1548428255463+0800)/",
+              "UploadTime_js": "2019-01-25T22:57:35.463",
+              "Url": ""
+            },
+            {
+              "ID": "10b0732e-2a5b-45bc-ab9d-9d188a7920da",
+              "FileName": "Lecture 2 slides.pdf",
+              "FileDescription": "Face to face lecture in week 2",
+              "FileSize": 494705,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1548161715237+0800)/",
+              "UploadTime_js": "2019-01-22T20:55:15.237",
+              "Url": ""
+            },
+            {
+              "ID": "a1b2e3be-986a-43c5-b4ed-fabf93b6414c",
+              "FileName": "Lecture 1 slides.pdf",
+              "FileDescription": "This slide deck will be used during the face to face lecture in week 1.",
+              "FileSize": 412714,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1547534289657+0800)/",
+              "UploadTime_js": "2019-01-15T14:38:09.657",
+              "Url": ""
+            }
+          ]
+        },
+        {
+          "ID": "69d0c189-7261-49b3-a77a-e4be7cd18f7a",
+          "FolderName": "Tutorial Sets",
+          "SortFilesBy": "Order",
+          "OpenDate": "/Date(1547049600000+0800)/",
+          "OpenDate_js": "2019-01-10T00:00:00",
+          "CloseDate": "/Date(1557590340000+0800)/",
+          "CloseDate_js": "2019-05-11T23:59:00",
+          "AllowUpload": false,
+          "AllowView": true,
+          "CommentOption": "1",
+          "FolderOrder": 3,
+          "FileCount": 5,
+          "UploadDisplayOption": "Name",
+          "Folders": [],
+          "Files": [
+            {
+              "ID": "34f2121b-58a6-4c3b-916c-f58476a79665",
+              "FileName": "Tutorial Set 3.pdf",
+              "FileDescription": "(for tutorial class in week 4)",
+              "FileSize": 30438,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1548663182883+0800)/",
+              "UploadTime_js": "2019-01-28T16:13:02.883",
+              "Url": ""
+            },
+            {
+              "ID": "0a59dc41-8453-4581-9898-765cce980b7c",
+              "FileName": "Tutorial Set 2.pdf",
+              "FileDescription": "(for tutorial class in week 3)",
+              "FileSize": 31477,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1548161812113+0800)/",
+              "UploadTime_js": "2019-01-22T20:56:52.113",
+              "Url": ""
+            },
+            {
+              "ID": "27bac70b-35f9-4720-ab2c-7c48e7f4c5dc",
+              "FileName": "Tutorial Set 2 solutions.pdf",
+              "FileDescription": "",
+              "FileSize": 37029,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1549024192780+0800)/",
+              "UploadTime_js": "2019-02-01T20:29:52.78",
+              "Url": ""
+            },
+            {
+              "ID": "eaecbb3f-1155-4334-9ce0-8a76d61f25b9",
+              "FileName": "Tutorial Set 1.pdf",
+              "FileDescription": "(for tutorial class in week 2)",
+              "FileSize": 32397,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1547475039750+0800)/",
+              "UploadTime_js": "2019-01-14T22:10:39.75",
+              "Url": ""
+            },
+            {
+              "ID": "104feae0-27bd-4fd4-9421-7c53a329b90c",
+              "FileName": "Tutorial Set 1 solutions.pdf",
+              "FileDescription": "",
+              "FileSize": 35955,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1548508893963+0800)/",
+              "UploadTime_js": "2019-01-26T21:21:33.963",
+              "Url": ""
+            }
+          ]
+        },
+        {
+          "ID": "4dc4c054-e4d2-420e-bea3-701a1c2aa74e",
+          "FolderName": "Practice Sets",
+          "SortFilesBy": "Date",
+          "OpenDate": "/Date(1547049600000+0800)/",
+          "OpenDate_js": "2019-01-10T00:00:00",
+          "CloseDate": "/Date(1557590340000+0800)/",
+          "CloseDate_js": "2019-05-11T23:59:00",
+          "AllowUpload": false,
+          "AllowView": true,
+          "CommentOption": "1",
+          "FolderOrder": 4,
+          "FileCount": 2,
+          "UploadDisplayOption": "Name",
+          "Folders": [],
+          "Files": [
+            {
+              "ID": "183f9cdc-f7af-46de-b9d3-e5e1486543ff",
+              "FileName": "Practice 2 answer.pdf",
+              "FileDescription": "",
+              "FileSize": 23123,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1549024233637+0800)/",
+              "UploadTime_js": "2019-02-01T20:30:33.637",
+              "Url": ""
+            },
+            {
+              "ID": "255cbfd6-b142-4424-83a8-a6f5f703c78e",
+              "FileName": "Practice 1 answer.pdf",
+              "FileDescription": "",
+              "FileSize": 23743,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": false,
+              "UploadTime": "/Date(1548508951997+0800)/",
+              "UploadTime_js": "2019-01-26T21:22:31.997",
+              "Url": ""
+            }
+          ]
+        },
+        {
+          "ID": "84056a99-6331-4eb0-ad26-742829743e78",
+          "FolderName": "Miscellaneous",
+          "SortFilesBy": "Date",
+          "OpenDate": "/Date(1547049600000+0800)/",
+          "OpenDate_js": "2019-01-10T00:00:00",
+          "CloseDate": "/Date(1557590340000+0800)/",
+          "CloseDate_js": "2019-05-11T23:59:00",
+          "AllowUpload": false,
+          "AllowView": true,
+          "CommentOption": "1",
+          "FolderOrder": 5,
+          "FileCount": 1,
+          "UploadDisplayOption": "Name",
+          "Folders": [],
+          "Files": [
+            {
+              "ID": "5444db22-b035-406a-9c46-2cdac6e30bd3",
+              "FileName": "MA1513 Lesson Plan AY1819 Sem 2.pdf",
+              "FileDescription": "",
+              "FileSize": 95814,
+              "FileType": "pdf",
+              "FileRemarks": "",
+              "FileRemarksAttachment": "",
+              "Commenter": {
+                "UserID": null,
+                "Name": null,
+                "Email": null,
+                "Title": null,
+                "UserGuid": "00000000-0000-0000-0000-000000000000",
+                "AccountType": null,
+                "Photo": null
+              },
+              "Creator": {
+                "UserID": "mattanv",
+                "Name": "Victor Tan",
+                "Email": null,
+                "Title": null,
+                "UserGuid": "a1088317-36a7-4a7e-abda-a6ee561e10f2",
+                "AccountType": null,
+                "Photo": null
+              },
+              "isDownloaded": true,
+              "UploadTime": "/Date(1547160767530+0800)/",
+              "UploadTime_js": "2019-01-11T06:52:47.53",
+              "Url": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "Comments": "",
+  "LastUpdate": "/Date(1549105495350+0800)/",
+  "LastUpdate_js": "2019-02-02T19:04:55.3504818+08:00"
+}
