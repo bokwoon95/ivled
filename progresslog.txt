@@ -1,3 +1,24 @@
+✗ Unmarshal a simple json structure from a file
+
+✗ Unmarshal an array of simple json structures from a file
+
+✗ Unmarshal an array of json structures (that can be one of two types) from a file
+
+Resources
+=========
+• Dealing With JSON With Non-Homogeneous Types In GO
+https://engineering.bitnami.com/articles/dealing-with-json-with-non-homogeneous-types-in-go.html
+
+• Decode top level JSON array into a slice of structs in golang
+https://coderwall.com/p/4c2zig/decode-top-level-json-array-into-a-slice-of-structs-in-golang
+
+• simplejson
+https://godoc.org/github.com/bitly/go-simplejson
+
+=======
+lapi.sh
+=======
+
 ✓ A function that generates a json array of this semester's modules together with the module ID (and cache it into a 'modules_taken.json' file). With the unique ID of each module, I can
 ✗ Write all temporary json files into a /tmp folder and clean up after you're done
     Writing to a /tmp folder also helps to avoid deleting other people's json files that match 'temp*.json'
