@@ -57,24 +57,9 @@ func main() {
 	moduleinfos := GetModulesTaken("modtak.json")
 	cprint(moduleinfos)
 
-	// jsonbytes, _ := ioutil.ReadFile("module_jsons/eg2401.json")
-	// var bigfolder []HomoFolder
-	// json.Unmarshal(jsonbytes, &bigfolder)
-
-	// fmt.Println("sending GET..")
-	// resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=$MA1513"))
-	// fmt.Println("GET completed")
-	// fmt.Println("reading response body..")
-	// body, _ := ioutil.ReadAll(resp.Body)
-	// fmt.Println("read finished")
-	//
-	// var homofolders HomoFolder
-	// fmt.Println("unmarshaling json...")
-	// json.Unmarshal(body, &homofolders)
-	// fmt.Println("json unmarshaled")
-	//
-	// CreateDirIfNotExist(ivleroot)
-	// Walk(ivleroot, homofolders)
+	for _, module := range moduleinfos {
+		DownloadWorkbin(module.ModuleCode, module.ID)
+	}
 }
 
 func GetModulesTaken(filename string) (moduleinfos []ModuleInfo) {
@@ -116,7 +101,7 @@ func GetModulesTaken(filename string) (moduleinfos []ModuleInfo) {
 			courseinfos = FilterCourseInfo(courseinfos, func(ci CourseInfo) bool {
 				return ci.CourseAcadYear == mi.AcadYear && ci.CourseSemester == mi.SemesterDisplay
 			})
-			// check that courseinfos[] has at least one element else next line will fail
+			//TODO check that courseinfos[] has at least one element else next line will fail
 			mi.ID = courseinfos[0].ID
 			return mi
 		})
@@ -126,28 +111,49 @@ func GetModulesTaken(filename string) (moduleinfos []ModuleInfo) {
 	return
 }
 
-func Walk(filedir string, hf HomoFolder) {
+func DownloadWorkbin(ModuleCode string, ModuleID string) {
+	fmt.Println("sending GET..")
+	resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=" + ModuleID))
+	fmt.Println(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=" + ModuleID))
+	fmt.Println("GET completed")
+	fmt.Println("reading response body..")
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println(ModuleCode, ModuleID)
+	cprint(string(body))
+	fmt.Println("read finished")
+
+	var homofolders HomoFolder
+	fmt.Println("unmarshaling json...")
+	json.Unmarshal(body, &homofolders)
+	fmt.Println("json unmarshaled")
+	// cprint(homofolders)
+
+	CreateDirIfNotExist(ivleroot)
+	Walk(ModuleCode, ivleroot, homofolders)
+}
+
+func Walk(modulecode string, filedir string, hf HomoFolder) {
 	if len(hf.Results) > 0 {
 		fmt.Println("Results:")
 		for _, hf1 := range hf.Results {
-			Walk(filedir, hf1)
+			Walk(modulecode, filedir, hf1)
 		}
 	} else if hf.Title != "" {
-		disdir := filedir + "/" + hf.Title
+		disdir := filedir + "/" + modulecode + " " + hf.Title
 		fmt.Println("dir:", disdir)
 		CreateDirIfNotExist(disdir)
 		for _, hf1 := range hf.Folders {
-			Walk(disdir, hf1)
+			Walk(modulecode, disdir, hf1)
 		}
 	} else if hf.FolderName != "" {
 		disdir := filedir + "/" + hf.FolderName
 		fmt.Println("dir:", disdir)
 		CreateDirIfNotExist(disdir)
 		for _, hf1 := range hf.Folders {
-			Walk(disdir, hf1)
+			Walk(modulecode, disdir, hf1)
 		}
 		for _, hf1 := range hf.Files {
-			Walk(disdir, hf1)
+			Walk(modulecode, disdir, hf1)
 		}
 	} else if hf.FileName != "" {
 		disfile := filedir + "/" + hf.FileName
