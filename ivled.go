@@ -202,8 +202,8 @@ func SetupConfig() IVLEConfig {
 
 	// Get AuthToken
 	authtoken_url := "https://ivle.nus.edu.sg/api/login/?apikey=" + LAPIkey
-	fmt.Println("\nA browser should have opened the URL " + authtoken_url + " (you will likely see a blank page, if so just visit the url manually). Enter your IVLE credentials, copy the long authorization token (Cmd+A to select all), paste it back here (Cmd+V for macOS) then press Enter")
-	openbrowser(authtoken_url) // IVLE disabled it or something, that's why all IVLEDownloaders have stopped 'working'. Not to worry we can tell the user to manually visit the URL.
+	fmt.Println("\nPlease visit the URL " + authtoken_url + ". Enter your IVLE credentials, copy the long authorization token (Cmd+A to select all), paste it back here (Cmd+V for macOS) then press Enter")
+	// openbrowser(authtoken_url) // IVLE disabled it or something, that's why all IVLEDownloaders have stopped 'working'. Not to worry we can tell the user to manually visit the URL.
 	fmt.Print("Authorization Token: ")
 	AuthToken, _ := reader.ReadString('\n')
 	fmt.Println(AuthToken)
@@ -231,7 +231,7 @@ func SetupConfig() IVLEConfig {
 	ivleconfig.Semester = strings.Trim(Semester, " \n")
 
 	// Get DownloadLocation
-	fmt.Println("Where would you like to download your IVLE folders to? Leave blank to download them into the current folder, otherwise provide a path like \"~/Documents/ivled_nus\"")
+	fmt.Println("Where would you like to download your IVLE folders to? Leave blank to download them into the current folder, otherwise provide a path like \"~/Downloads/NUS\"")
 	fmt.Print("ivled Download Location: ")
 	DownloadLocation, _ := reader.ReadString('\n')
 	if DownloadLocation == "\n" {
