@@ -14,7 +14,9 @@
 
 ✓ using $ivleroot to create absolute file paths, make walk() create the necessary folders with golang's filesystem functions
 
-✗ Generate the initial modules_taken.json using golang
+✓ Generate the initial modules_taken.json using golang
+
+✗ shell script should generate the $AcadYear and $Semester variables automatically based on the system date. But first, check with the user if that is indeed the date (system date might be off)
 
 ✗ Make syscalls to macOS's `open` to get the user's LAPIkey and AuthToken
 
