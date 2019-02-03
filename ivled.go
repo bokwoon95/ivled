@@ -54,37 +54,8 @@ func main() {
 	fmt.Println("$AuthToken:", os.Getenv("AuthToken"))
 	fmt.Println("$StudentID:", os.Getenv("StudentID"))
 
-	fmt.Println("GET-ting your modules this semester..")
-	// Check if LAPIkey and AuthToken and StudentID are not empty
-	resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey=$LAPIkey&AuthToken=$AuthToken&StudentID=$StudentID"))
-	fmt.Println("GET completed")
-	body, _ := ioutil.ReadAll(resp.Body)
-	var ivleresponse IVLEresponse
-	json.Unmarshal(body, &ivleresponse)
-	tprint(ivleresponse.Results)
-	var moduleinfos []ModuleInfo
-	json.Unmarshal(ivleresponse.Results, &moduleinfos)
-	moduleinfos = FilterModuleInfo(moduleinfos, func(mi ModuleInfo) bool {
-		return mi.AcadYear == "2018/2019" && mi.SemesterDisplay == "Semester 2"
-	})
-	moduleinfos = MapModuleInfo(moduleinfos, func(mi ModuleInfo) ModuleInfo {
-		fmt.Println("GET-ting the module ID of", mi.ModuleCode+"..")
-		resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=$LAPIkey&AuthToken=$AuthToken&IncludeAllInfo=false&ModuleCode=" + mi.ModuleCode))
-		fmt.Println("GET completed")
-		body, _ := ioutil.ReadAll(resp.Body)
-		var ivleresponse IVLEresponse
-		json.Unmarshal(body, &ivleresponse)
-		var courseinfos []CourseInfo
-		json.Unmarshal(ivleresponse.Results, &courseinfos)
-		courseinfos = FilterCourseInfo(courseinfos, func(ci CourseInfo) bool {
-			return ci.CourseAcadYear == mi.AcadYear && ci.CourseSemester == mi.SemesterDisplay
-		})
-		// check that courseinfos[] has at least one element else next line will fail
-		mi.ID = courseinfos[0].ID
-		return mi
-	})
-	json, _ := JSONMarshalIndent(moduleinfos, true)
-	_ = ioutil.WriteFile("modtak.json", json, 0666)
+	moduleinfos := GetModulesTaken("modtak.json")
+	cprint(moduleinfos)
 
 	// jsonbytes, _ := ioutil.ReadFile("module_jsons/eg2401.json")
 	// var bigfolder []HomoFolder
@@ -104,6 +75,55 @@ func main() {
 	//
 	// CreateDirIfNotExist(ivleroot)
 	// Walk(ivleroot, homofolders)
+}
+
+func GetModulesTaken(filename string) (moduleinfos []ModuleInfo) {
+	LAPIrequestmodules := true
+
+	if _, err := os.Stat(filename); err == nil {
+		jsonbytes, _ := ioutil.ReadFile(filename)
+		err := json.Unmarshal(jsonbytes, &moduleinfos)
+		if err != nil {
+			panic(err)
+		}
+		if len(moduleinfos) >= 0 {
+			LAPIrequestmodules = false
+		}
+	}
+
+	if LAPIrequestmodules {
+		fmt.Println("GET-ting your modules this semester..")
+		//TODO Check if LAPIkey and AuthToken and StudentID are not empty
+		resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey=$LAPIkey&AuthToken=$AuthToken&StudentID=$StudentID"))
+		fmt.Println("GET completed")
+		body, _ := ioutil.ReadAll(resp.Body)
+		var ivleresponse IVLEresponse
+		json.Unmarshal(body, &ivleresponse)
+		tprint(ivleresponse.Results)
+		json.Unmarshal(ivleresponse.Results, &moduleinfos)
+		moduleinfos = FilterModuleInfo(moduleinfos, func(mi ModuleInfo) bool {
+			return mi.AcadYear == "2018/2019" && mi.SemesterDisplay == "Semester 2"
+		})
+		moduleinfos = MapModuleInfo(moduleinfos, func(mi ModuleInfo) ModuleInfo {
+			fmt.Println("GET-ting the module ID of", mi.ModuleCode+"..")
+			resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=$LAPIkey&AuthToken=$AuthToken&IncludeAllInfo=false&ModuleCode=" + mi.ModuleCode))
+			fmt.Println("GET completed")
+			body, _ := ioutil.ReadAll(resp.Body)
+			var ivleresponse IVLEresponse
+			json.Unmarshal(body, &ivleresponse)
+			var courseinfos []CourseInfo
+			json.Unmarshal(ivleresponse.Results, &courseinfos)
+			courseinfos = FilterCourseInfo(courseinfos, func(ci CourseInfo) bool {
+				return ci.CourseAcadYear == mi.AcadYear && ci.CourseSemester == mi.SemesterDisplay
+			})
+			// check that courseinfos[] has at least one element else next line will fail
+			mi.ID = courseinfos[0].ID
+			return mi
+		})
+		json, _ := JSONMarshalIndent(moduleinfos, true)
+		_ = ioutil.WriteFile("modtak.json", json, 0666)
+	}
+	return
 }
 
 func Walk(filedir string, hf HomoFolder) {
@@ -137,10 +157,6 @@ func Walk(filedir string, hf HomoFolder) {
 		} else {
 		}
 	}
-}
-
-func FileExists(filepath string) bool {
-	return false
 }
 
 func DownloadFileIfNotExist(filepath string, fileid string) error {

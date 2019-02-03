@@ -16,7 +16,14 @@
 
 ✓ Generate the initial modules_taken.json using golang
 
+✗ Based on modules_taken.json, download all relevant files into workbin
+
 ✗ shell script should generate the $AcadYear and $Semester variables automatically based on the system date. But first, check with the user if that is indeed the date (system date might be off)
+✗ Instead of setting environment variables, maybe the config variables like StudentID and AcadYear and LAPIkey and AuthToken should be generated upfront and saved into a config.json, where all the module info (currently in modules_taken.json) should also be stored?
+    • Make the LAPIkey and AuthToken generation as robust as possible. Opt for dumb, stupid methods that are guaranteed to work with backup routes available rather than clever ways of automatically getting information that may break and leave students hanging.
+
+✗ Refactor IVLERequest into its own function
+    • It can also check the comments if the login is valid every time and return an error if the lapikey or authtoken failed
 
 ✗ Make syscalls to macOS's `open` to get the user's LAPIkey and AuthToken
 
