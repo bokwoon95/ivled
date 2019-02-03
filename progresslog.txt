@@ -12,7 +12,11 @@
         • I was having problems trying to get json.RawMessage to be recognized (apparently jsoniter did NOT implement the API for json.RawMessage) so I switched over to "encoding/json" to try it out
     • What the fuck? If I switch back to the "encoding/json" stdlib the homofolders suddenly become correctly parsed. Could it be because of a regression in the supposedly 'drop-in replacement' jsoniter library that was the problem in the first place?
 
-✗ using $ivleroot to create absolute file paths, make walk() create the necessary folders with golang's filesystem functions
+✓ using $ivleroot to create absolute file paths, make walk() create the necessary folders with golang's filesystem functions
+
+✗ Generate the initial modules_taken.json using golang
+
+✗ Make syscalls to macOS's `open` to get the user's LAPIkey and AuthToken
 
 Resources
 =========
