@@ -33,7 +33,12 @@
 ✗ Add `ivled help`, `ivled config`, `ivled deleteconfig` and `ivled download` commands
     ✗ When configuring the download root path, allow users to specify a filepath. If a folder name without slashes is provided, create the folder in the current directory instead. This will be better for non-technical users, just ask them to navigate to the correct folder in Finder, open a terminal, then run the `ivle config` command.
 
-✗ Trim all user input in case they accidentally paste in extra spaces
+✓ Trim all user input in case they accidentally paste in extra spaces
+
+✓ If a FolderName has 'Submissions' (as in 'Student Submissions') in it, do not download anything from the folder.
+
+✓ Unacceptable filetypes: video, audio, anything above 5MB
+    Exclusion list: mp4, mov, mp3, avi
 
 Known Limitations
 =================
@@ -75,10 +80,6 @@ lapi.sh
     Writing to a /tmp folder also helps to avoid deleting other people's json files that match 'temp*.json'
 
 ✗ How the eff do I travel the json tree? Traversal can probaby be done in jq, but I'll miss out on bash's file handing. Bash has commands for file handling, but it needs jq to traverse the tree.
-
-✗ If a FolderName has 'Submissions' (as in 'Student Submissions') in it, do not download anything from the folder.
-
-✗ Unacceptable filetypes: video, audio, anything above 5MB
 
 Possible Failures
 =================

@@ -66,12 +66,14 @@ type HomoFolder struct {
 	ID       string
 }
 
-func main() {
-	// fmt.Println(ivleroot)
-	// fmt.Println("$LAPIkey:", os.Getenv("LAPIkey"))
-	// fmt.Println("$AuthToken:", os.Getenv("AuthToken"))
-	// fmt.Println("$StudentID:", os.Getenv("StudentID"))
+var filetype_exclusionlist = map[string]bool{
+	"mp4": true,
+	"mp3": true,
+	"mov": true,
+	"avi": true,
+}
 
+func main() {
 	var ivleconfig IVLEConfig
 	doSetupConfig := true
 	if _, err := os.Stat(os.ExpandEnv("$HOME/.config/ivled.json")); err == nil {
@@ -87,7 +89,6 @@ func main() {
 	if doSetupConfig {
 		ivleconfig = SetupConfig()
 	}
-	cprint(ivleconfig)
 	moduleinfos := ivleconfig.ModulesThisSem
 
 	for _, module := range moduleinfos {
@@ -191,7 +192,7 @@ func SetupConfig() IVLEConfig {
 	configfile, _ := os.OpenFile(os.ExpandEnv("$HOME/.config/ivled.json"), os.O_WRONLY|os.O_CREATE, 0666)
 	json, _ := JSONMarshalIndent(ivleconfig, true)
 	configfile.Truncate(0)
-	configfile.Seek(0,0)
+	configfile.Seek(0, 0)
 	configfile.Write(json)
 	defer configfile.Close()
 
@@ -254,21 +255,14 @@ func GetModulesTaken(ivc IVLEConfig) (moduleinfos []ModuleInfo) {
 }
 
 func DownloadWorkbin(ModuleCode string, ModuleID string) {
-	fmt.Println("sending GET..")
+	fmt.Println("==================================")
+	fmt.Println("Downloading", ModuleCode, "Workbin")
+	fmt.Println("==================================")
 	resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=" + ModuleID))
-	fmt.Println(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=" + ModuleID))
-	fmt.Println("GET completed")
-	fmt.Println("reading response body..")
 	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println(ModuleCode, ModuleID)
-	cprint(string(body))
-	fmt.Println("read finished")
 
 	var homofolders HomoFolder
-	fmt.Println("unmarshaling json...")
 	json.Unmarshal(body, &homofolders)
-	fmt.Println("json unmarshaled")
-	// cprint(homofolders)
 
 	CreateDirIfNotExist(ivleroot)
 	Walk(ModuleCode, ivleroot, homofolders)
@@ -276,41 +270,45 @@ func DownloadWorkbin(ModuleCode string, ModuleID string) {
 
 func Walk(modulecode string, filedir string, hf HomoFolder) {
 	if len(hf.Results) > 0 {
-		fmt.Println("Results:")
 		for _, hf1 := range hf.Results {
 			Walk(modulecode, filedir, hf1)
 		}
 	} else if hf.Title != "" {
-		disdir := filedir + "/" + modulecode + " " + hf.Title
-		fmt.Println("dir:", disdir)
-		CreateDirIfNotExist(disdir)
-		for _, hf1 := range hf.Folders {
-			Walk(modulecode, disdir, hf1)
+		disdir := filedir + "/" + modulecode
+		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") {
+			fmt.Println("Folder     :", disdir)
+			CreateDirIfNotExist(disdir)
+			for _, hf1 := range hf.Folders {
+				Walk(modulecode, disdir, hf1)
+			}
 		}
 	} else if hf.FolderName != "" {
 		disdir := filedir + "/" + hf.FolderName
-		fmt.Println("dir:", disdir)
-		CreateDirIfNotExist(disdir)
-		for _, hf1 := range hf.Folders {
-			Walk(modulecode, disdir, hf1)
+		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") {
+			fmt.Println("Folder     :", disdir)
+			CreateDirIfNotExist(disdir)
+			for _, hf1 := range hf.Folders {
+				Walk(modulecode, disdir, hf1)
+			}
 		}
 		for _, hf1 := range hf.Files {
 			Walk(modulecode, disdir, hf1)
 		}
 	} else if hf.FileName != "" {
 		disfile := filedir + "/" + hf.FileName
-		fmt.Println("fil:", disfile)
-		fmt.Println("\t", hf.ID)
-		if err := DownloadFileIfNotExist(disfile, hf.ID); err != nil {
+		if err := DownloadFileIfNotExist(disfile, hf.ID, hf.FileType); err != nil {
 		} else {
 		}
 	}
 }
 
-func DownloadFileIfNotExist(filepath string, fileid string) error {
+func DownloadFileIfNotExist(filepath string, fileid string, filetype string) error {
+	if filetype_exclusionlist[strings.ToLower(filetype)] {
+		return nil
+	}
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
-		fmt.Println(filepath, "does not exist, GET-ting..")
 		// Get the data
+		fmt.Println("Downloading:", filepath)
 		url := os.ExpandEnv("https://ivle.nus.edu.sg/api/downloadfile.ashx?APIKey=$LAPIkey&AuthToken=$AuthToken&ID=" + fileid + "&target=workbin")
 		resp, err := http.Get(url)
 		if err != nil {
@@ -319,21 +317,16 @@ func DownloadFileIfNotExist(filepath string, fileid string) error {
 		// cprint(url)
 		// cprint(resp.Body)
 		defer resp.Body.Close()
-		fmt.Println(filepath, "GET completed")
 
 		// Create the file
-		fmt.Println("creating", filepath+"..")
 		out, err := os.Create(filepath)
 		if err != nil {
 			return err
 		}
 		defer out.Close()
-		fmt.Println(filepath, "created")
 
 		// Write the body to file
-		fmt.Println("Writing GET response to", filepath+"..")
 		_, err = io.Copy(out, resp.Body)
-		fmt.Println("Write completed")
 		return err
 	}
 	return nil
