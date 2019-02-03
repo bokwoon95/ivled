@@ -17,7 +17,7 @@ import (
 	"time"
 )
 
-var ivleroot = os.ExpandEnv("$HOME/nus_ivled")
+var ivleroot = os.ExpandEnv("$HOME/NUS")
 
 type IVLEConfig struct {
 	LAPIkey          string
@@ -72,13 +72,27 @@ func main() {
 	// fmt.Println("$AuthToken:", os.Getenv("AuthToken"))
 	// fmt.Println("$StudentID:", os.Getenv("StudentID"))
 
-	SetupConfig()
-	// moduleinfos := GetModulesTaken("modtak.json")
-	// cprint(moduleinfos)
-	//
-	// for _, module := range moduleinfos {
-	// 	DownloadWorkbin(module.ModuleCode, module.ID)
-	// }
+	var ivleconfig IVLEConfig
+	doSetupConfig := true
+	if _, err := os.Stat(os.ExpandEnv("$HOME/.config/ivled.json")); err == nil {
+		jsonbytes, _ := ioutil.ReadFile(os.ExpandEnv("$HOME/.config/ivled.json"))
+		err := json.Unmarshal(jsonbytes, &ivleconfig)
+		if err != nil {
+			panic(err)
+		}
+		if len(ivleconfig.ModulesThisSem) >= 0 {
+			doSetupConfig = false
+		}
+	}
+	if doSetupConfig {
+		ivleconfig = SetupConfig()
+	}
+	cprint(ivleconfig)
+	moduleinfos := ivleconfig.ModulesThisSem
+
+	for _, module := range moduleinfos {
+		DownloadWorkbin(module.ModuleCode, module.ID)
+	}
 }
 
 func SetupConfig() IVLEConfig {
@@ -187,16 +201,16 @@ func SetupConfig() IVLEConfig {
 func GetModulesTaken(ivc IVLEConfig) (moduleinfos []ModuleInfo) {
 	LAPIrequestmodules := true
 
-	// if _, err := os.Stat(filename); err == nil {
-	// 	jsonbytes, _ := ioutil.ReadFile(filename)
-	// 	err := json.Unmarshal(jsonbytes, &moduleinfos)
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// 	if len(moduleinfos) >= 0 {
-	// 		LAPIrequestmodules = false
-	// 	}
-	// }
+	if _, err := os.Stat("modules_taken.json"); err == nil {
+		jsonbytes, _ := ioutil.ReadFile("modules_taken.json")
+		err := json.Unmarshal(jsonbytes, &moduleinfos)
+		if err != nil {
+			panic(err)
+		}
+		if len(moduleinfos) >= 0 {
+			LAPIrequestmodules = false
+		}
+	}
 
 	if LAPIrequestmodules {
 		fmt.Println("GET-ting your modules this semester..")
