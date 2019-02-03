@@ -8,10 +8,11 @@ import (
 	"os"
 
 	// drop-in replacement of stdlib 'encoding/json' that's way faster
-	jsoniter "github.com/json-iterator/go"
+	// jsoniter "github.com/json-iterator/go"
+	"encoding/json"
 )
 
-var json = jsoniter.ConfigFastest
+// var json = jsoniter.ConfigCompatibleWithStandardLibrary
 var ivleroot = os.ExpandEnv("$HOME/nus")
 
 type HomoFolder struct {
@@ -19,14 +20,18 @@ type HomoFolder struct {
 
 	Title string `json:"Title,omitempty"`
 
-	FolderName string `json:"FolderName,omitempty"`
+	FolderName string       `json:"FolderName,omitempty"`
 	Folders    []HomoFolder `json:"Folders,omitempty"`
 	Files      []HomoFolder `json:"Files,omitempty"`
 
 	FileName string `json:"FileName,omitempty"`
 	FileType string `json:"FIleType,omitempty"`
-	FileSize int `json:"FileSize,omitempty"`
+	FileSize int    `json:"FileSize,omitempty"`
 	ID       string `json:"ID,omitempty"`
+}
+
+type Results struct {
+	Results []*json.RawMessage
 }
 
 type PreStruct struct {
@@ -43,17 +48,32 @@ func main() {
 	var bigfolder []HomoFolder
 	json.Unmarshal(jsonbytes, &bigfolder)
 
+	fmt.Println("sending GET..")
 	resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=$MA1513"))
+	fmt.Println("GET completed")
+	fmt.Println("reading response body..")
 	body, _ := ioutil.ReadAll(resp.Body)
-	cprint(string(body))
+	fmt.Println("read finished")
+	cprint(body)
 	fmt.Printf("\n\n\n")
 	// var prestruct PreStruct
+
 	var homofolders HomoFolder
+	fmt.Println("unmarshaling json...")
 	json.Unmarshal(body, &homofolders)
+	fmt.Println("json unmarshaled")
+	cprint(homofolders.Results)
+	fmt.Printf("\n\n\n")
+
+	// var results Results
+	// json.Unmarshal(body, &results)
+	// cprint(results)
+	// fmt.Printf("\n\n\n")
+
 	// cprint(prestruct)
 	// fmt.Printf("\n\n\n")
 	// homofolders = prestruct.Results
-	cprint(homofolders)
+	// cprint(homofolders)
 
 	// cprint(bigfolder[0])
 	// for _, hf := range bigfolder {
