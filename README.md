@@ -1,2 +1,2 @@
 # ivled
-IVLE downloader lite. Simple command line wrapper over IVLE LAPI. Tired of Qt IVLEDownloader breaking? This may be for you.
+IVLE downloader lite. Simple command line wrapper over IVLE LAPI. You don't need a big, fancy Qt framework to use the IVLE API. All you need is something that can make HTTP requests and something that can wrangle json. It's particularly egregious when IVLEDownloader breaks and no one knows how to fix it and everyone's got little forks everywhere which nobody knows which work and which don't. Simple is better, and likelier to be maintained.
