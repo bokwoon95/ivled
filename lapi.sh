@@ -7,6 +7,9 @@ export EG2401="f559e6e3-eb62-45b4-97e3-cbdb57710eae"
 export GES1002="1c752f6a-52f7-45f4-8a06-2d8b39878593"
 export MA1512="7d6b57ce-4fd6-4f63-b94e-08c6306f985d"
 export MA1513="08794bbd-b65a-4389-ad06-078b09fc729e"
+export getlapikey="https://ivle.nus.edu.sg/LAPI/default.aspx"
+export getauthtoken="https://ivle.nus.edu.sg/api/login/?apikey=$1&url="
+export validateandrefreshtoken="https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=$1&Token=$2"
 
 # lapi core API
 lapi_modules_taken() {

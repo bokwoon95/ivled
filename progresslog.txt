@@ -16,9 +16,10 @@
 
 ✓ Generate the initial modules_taken.json using golang
 
-✗ Based on modules_taken.json, download all relevant files into workbin
+✓ Based on modules_taken.json, download all relevant files into workbin
 
 ✗ Remove Results[] from HomoFolder struct and use IVLERequest struct to unwrap Results[] instead
+    Do error check for `Comments: "Invalid login!"`!
 
 ✗ shell script should generate the $AcadYear and $Semester variables automatically based on the system date. But first, check with the user if that is indeed the date (system date might be off)
 ✗ Instead of setting environment variables, maybe the config variables like StudentID and AcadYear and LAPIkey and AuthToken should be generated upfront and saved into a config.json, where all the module info (currently in modules_taken.json) should also be stored?
@@ -28,6 +29,11 @@
     • It can also check the comments if the login is valid every time and return an error if the lapikey or authtoken failed
 
 ✗ Make syscalls to macOS's `open` to get the user's LAPIkey and AuthToken
+
+✗ Add `ivled help`, `ivled config`, `ivled deleteconfig` and `ivled download` commands
+    ✗ When configuring the download root path, allow users to specify a filepath. If a folder name without slashes is provided, create the folder in the current directory instead. This will be better for non-technical users, just ask them to navigate to the correct folder in Finder, open a terminal, then run the `ivle config` command.
+
+✗ Trim all user input in case they accidentally paste in extra spaces
 
 Known Limitations
 =================
@@ -43,6 +49,9 @@ Known Limitations
 
 • Configuration updating might be a big bitch if there's no GUI frontend to it.
     • Include well-explained instructions on where the config files are stored and how to tweak them.
+
+• AcadYear and Semester calculations might fail if it's run during the Holidays. In those cases ask the user to Manually specify their AcadYear and Semester (in the correct format)
+    • but WHAT is the semester during the special term?
 
 Resources
 =========
