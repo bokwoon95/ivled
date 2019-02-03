@@ -216,11 +216,11 @@ func SetupConfig() IVLEConfig {
 	month, _ := strconv.Atoi(time.Now().Format("1"))
 	var Semester, sem1year, sem2year string
 	if month >= 8 && month <= 12 {
-		Semester = "1"
+		Semester = "Semester 1"
 		sem1year = time.Now().Format("2006")
 		sem2year = time.Now().AddDate(1, 0, 0).Format("2006")
 	} else if month >= 1 && month <= 7 {
-		Semester = "2"
+		Semester = "Semester 2"
 		sem1year = time.Now().AddDate(-1, 0, 0).Format("2006")
 		sem2year = time.Now().Format("2006")
 	} else {
@@ -261,7 +261,7 @@ func SetupConfig() IVLEConfig {
 	json.Unmarshal(ivleresponse.Results, &moduleinfos)
 	cprint(moduleinfos)
 	moduleinfos = FilterModuleInfo(moduleinfos, func(mi ModuleInfo) bool {
-		return mi.AcadYear == "2018/2019" && mi.SemesterDisplay == "Semester 2"
+		return mi.AcadYear == ivleconfig.AcadYear && mi.SemesterDisplay == ivleconfig.Semester
 	})
 	moduleinfos = MapModuleInfo(moduleinfos, func(mi ModuleInfo) ModuleInfo {
 		fmt.Println("GETting module info for :", mi.ModuleCode)
