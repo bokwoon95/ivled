@@ -96,10 +96,13 @@ func main() {
 	// If it doesn't exist we'll have to set it up the first time
 	doSetupConfig := true
 	if _, err := os.Stat(os.ExpandEnv("$HOME/.config/ivled.json")); err == nil {
-		jsonbytes, _ := ioutil.ReadFile(os.ExpandEnv("$HOME/.config/ivled.json"))
-		err := json.Unmarshal(jsonbytes, &ivleconfig)
+		jsonbytes, err := ioutil.ReadFile(os.ExpandEnv("$HOME/.config/ivled.json"))
 		if err != nil {
-			panic(err)
+			log.Fatalln(err)
+		}
+		err = json.Unmarshal(jsonbytes, &ivleconfig)
+		if err != nil {
+			log.Fatalln(err)
 		}
 		if len(ivleconfig.ModulesThisSem) >= 0 {
 			doSetupConfig = false
@@ -135,8 +138,14 @@ func main() {
 
 // Main function to interact with the IVLE API
 func IVLEGetRequest(url string) (ivleresponse IVLEResponse, err error) {
-	resp, _ := http.Get(url)
-	body, _ := ioutil.ReadAll(resp.Body)
+	resp, err := http.Get(url)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	json.Unmarshal(body, &ivleresponse)
 	if ivleresponse.Comments == "Invalid login!" {
 		err = errors.New("Invalid login!")
