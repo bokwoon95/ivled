@@ -5,7 +5,7 @@ All the source code is in a single `ivled.go` file because the IVLE API is not c
 Tested on macOS Mojave, Windows support coming. By default, [mp4 mp3 mov avi] files are excluded, but support for configuring ignorable filetypes (and ignorable folders) is also planned.
 
 # macOS Installation
-1. Use Chrome (Safari downloads .dms files instead) to download ivled file (marked by "<-- macOS USERS DOWNLOAD THIS"). Make sure it downloads into your 'Downloads' folder.
+1. Use Chrome (not Safari) to download 'ivled' file (marked by "<-- macOS USERS DOWNLOAD THIS"). Make sure it downloads into your 'Downloads' folder.
 2. Open Terminal. Run this command
 ```
 mv ~/Downloads/ivled /usr/local/bin
