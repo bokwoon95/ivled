@@ -28,7 +28,7 @@
 
 ✓ Refactor IVLERequest into its own function
     • It can also check the comments if the login is valid every time and return an error if the lapikey or authtoken failed
-    ✗ make SetupConfig() use IVLERequest as well (It's a bit of a pain to regenerate ~/.config/ivled.json)
+    ✓ make SetupConfig() use IVLERequest as well (It's a bit of a pain to regenerate ~/.config/ivled.json)
 
 ✓ Make syscalls to macOS's `open` to get the user's LAPIkey and AuthToken
 
@@ -50,6 +50,8 @@
 ✗ Let user configure his own filepath ignore list
     • How should this be gracefully configured? Using a TUI (big undertaking)? Asking users to be familiar with filepaths, complete with instructions on how to configure them? (easier to pull off, unsure if it will put off non-techy users)
     • If I change the config file from JSON to TOML, it's a lot easier to direct users on how to add new filepaths for exclusion.
+
+✗ After reading in ivled.json, do check if the AcadYear and Semester are still valid. If not, you will have to regenerate the entire ivled.json again for the new semester's modules.
 
 ✗ Stop ignoring error return values and address every one of them
 

@@ -1,2 +1,5 @@
 # ivled
-IVLE downloader lite. Simple command line wrapper over IVLE LAPI. You don't need a big, fancy Qt framework to use the IVLE API. All you need is something that can make HTTP requests and something that can wrangle json. It's particularly egregious when IVLEDownloader breaks and no one knows how to fix it and everyone's got little forks everywhere which nobody knows which work and which don't. Simple is better, and likelier to be maintained.
+IVLE downloader lite. Simple command line wrapper over IVLE LAPI.
+All the source code is in a single `ivled.go` file because the IVLE API is not complicated. You just need to make some HTTP requests to obtain a file list, parse some JSON, make some more HTTP requests to download the files. (You don't need OOP 🙄)
+
+Tested on macOS Mojave, Windows support coming. By default, [mp4 mp3 mov avi] files are excluded, but support for configuring ignorable filetypes (and ignorable folders) is also planned.
