@@ -252,6 +252,7 @@ func SetupConfig() IVLEConfig {
 		DownloadLocation = currdir
 	}
 	DownloadLocation = strings.Replace(DownloadLocation, "~", "$HOME", 1)
+	DownloadLocation = os.ExpandEnv(DownloadLocation)
 	fmt.Println(DownloadLocation)
 	ivleconfig.DownloadLocation = strings.Trim(DownloadLocation, " \n")
 
