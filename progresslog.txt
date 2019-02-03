@@ -18,6 +18,21 @@
 
 ✗ Make syscalls to macOS's `open` to get the user's LAPIkey and AuthToken
 
+Known Limitations
+=================
+• Autostart can work (add script to launchd), but no polling is done. It's a lot like `git pull`, you have to run it yourself to get updates.
+    • It might be for the better anyway since the API servers apparently revoke your keys and tokens if you poll too often.
+    • Polling _could_ be done by wrapping the command in a shell script that calls `ivled` in a loop.
+
+• You have to manually copy and paste the API keys and AuthTokens from the web browser (invoked by macOS's `open`)
+    • Do also mention which file the program reads the config settings from so that it's very transparent to the user where he can manually paste in his updated keys/authtokens.
+
+• File existence check is pretty brittle right now. It is checked by filenames; if you rename a file, it will be recognized that the file no longer exists and will be redownloaded.
+    • Also, no files are ever deleted (but it's unlikely that any file will ever be removed in IVLE anyway)
+
+• Configuration updating might be a big bitch if there's no GUI frontend to it.
+    • Include well-explained instructions on where the config files are stored and how to tweak them.
+
 Resources
 =========
 • Dealing With JSON With Non-Homogeneous Types In GO
