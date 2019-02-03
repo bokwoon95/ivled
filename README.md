@@ -11,4 +11,6 @@ Tested on macOS Mojave, Windows support coming. By default, [mp4 mp3 mov avi] fi
 mv ~/Downloads/ivled /usr/local/bin
 chmod a+x /usr/local/bin/ivled
 ```
-3. That's it. Run `ivled` to begin.
+3. Run `ivled` to begin. You will go through an initial setup process, after that your config settings will be written to `~/.config/ivled.json`. The next time, just run `ivled` to pull the latest files from IVLE.
+
+If you want to inspect or edit your config anytime, just run the command `open ~/.config/ivled.json`. <sub>(JSON is not a friendly format to edit config files in, I plan to eventually move over to TOML.)</sub>
