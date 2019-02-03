@@ -5,12 +5,14 @@
 ✓ Unmarshal an array of json structures (that can be one of two types) from a file
     ✓ Kind of achieved with a union struct, a very ugly solution
 
-✗ Why is Unmarshal() blatantly ignoring certain elements in my Results[] json array?
+✓ Why is Unmarshal() blatantly ignoring certain elements in my Results[] json array?
     • What I will try next is
     "Cool trick: you can parse the same JSON using multiple structs, to adjust to different contents dynamically this way."
     Instead of reading it into a recursive homofolder struct, I can recursively parse the json. Arrays of unknown contents will simply be parsed as '[]json.RawMessage', which I can iterate over at my own leisure(https://stackoverflow.com/a/52250578).
-        • I was having problems trying to get json.RawMessage to be recognized (apparently jsoniter has no API for json.RawMessage) so I switched over to "encoding/json" to try it out
-    • What the fuck? If I switch back to the "encoding/json" stdlib the homofolders suddenly become correctly parsed. Could it be because of a regression in the supposedly 'drop-in replacement' jsoniter library?
+        • I was having problems trying to get json.RawMessage to be recognized (apparently jsoniter did NOT implement the API for json.RawMessage) so I switched over to "encoding/json" to try it out
+    • What the fuck? If I switch back to the "encoding/json" stdlib the homofolders suddenly become correctly parsed. Could it be because of a regression in the supposedly 'drop-in replacement' jsoniter library that was the problem in the first place?
+
+✗ using $ivleroot to create absolute file paths, make walk() create the necessary folders with golang's filesystem functions
 
 Resources
 =========

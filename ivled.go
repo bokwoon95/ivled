@@ -1,41 +1,29 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
-
-	// drop-in replacement of stdlib 'encoding/json' that's way faster
-	// jsoniter "github.com/json-iterator/go"
-	"encoding/json"
 )
 
-// var json = jsoniter.ConfigCompatibleWithStandardLibrary
-var ivleroot = os.ExpandEnv("$HOME/nus")
+var ivleroot = os.ExpandEnv("$HOME/nus_ivled")
 
 type HomoFolder struct {
-	Results []HomoFolder `json:"Results,omitempty"`
-
-	Title string `json:"Title,omitempty"`
-
-	FolderName string       `json:"FolderName,omitempty"`
-	Folders    []HomoFolder `json:"Folders,omitempty"`
-	Files      []HomoFolder `json:"Files,omitempty"`
-
-	FileName string `json:"FileName,omitempty"`
-	FileType string `json:"FIleType,omitempty"`
-	FileSize int    `json:"FileSize,omitempty"`
-	ID       string `json:"ID,omitempty"`
-}
-
-type Results struct {
-	Results []*json.RawMessage
-}
-
-type PreStruct struct {
 	Results []HomoFolder
+
+	Title string
+
+	FolderName string
+	Folders    []HomoFolder
+	Files      []HomoFolder
+
+	FileName string
+	FileType string
+	FileSize int
+	ID       string
 }
 
 func main() {
@@ -54,90 +42,100 @@ func main() {
 	fmt.Println("reading response body..")
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println("read finished")
-	cprint(body)
-	fmt.Printf("\n\n\n")
-	// var prestruct PreStruct
+	// cprint(body)
+	// fmt.Printf("\n\n\n")
 
 	var homofolders HomoFolder
 	fmt.Println("unmarshaling json...")
 	json.Unmarshal(body, &homofolders)
 	fmt.Println("json unmarshaled")
-	cprint(homofolders.Results)
-	fmt.Printf("\n\n\n")
-
-	// var results Results
-	// json.Unmarshal(body, &results)
-	// cprint(results)
+	// cprint(homofolders.Results)
 	// fmt.Printf("\n\n\n")
 
-	// cprint(prestruct)
-	// fmt.Printf("\n\n\n")
-	// homofolders = prestruct.Results
-	// cprint(homofolders)
+	CreateDirIfNotExist(ivleroot)
+	Walk(ivleroot, homofolders)
 
-	// cprint(bigfolder[0])
-	// for _, hf := range bigfolder {
-	// 	walk(hf)
-	// }
-	walk(homofolders)
-
-	// fileurl := os.ExpandEnv("https://ivle.nus.edu.sg/api/downloadfile.ashx?APIKey=$LAPIkey&AuthToken=$AuthToken&ID=5444db22-b035-406a-9c46-2cdac6e30bd3&target=workbin")
 	// if err := DownloadFile("yee.pdf", fileurl); err != nil {
 	// 	panic(err)
 	// }
 }
 
-func walk(hf HomoFolder) {
+func Walk(filedir string, hf HomoFolder) {
 	if len(hf.Results) > 0 {
 		fmt.Println("Results:")
 		for _, hf1 := range hf.Results {
-			walk(hf1)
+			Walk(filedir, hf1)
 		}
 	} else if hf.Title != "" {
-		fmt.Println("Workbin:", hf.Title)
+		disdir := filedir + "/" + hf.Title
+		fmt.Println("dir:", disdir)
+		CreateDirIfNotExist(disdir)
 		for _, hf1 := range hf.Folders {
-			walk(hf1)
+			Walk(disdir, hf1)
 		}
 	} else if hf.FolderName != "" {
-		fmt.Println("FolderName:", hf.FolderName)
+		disdir := filedir + "/" + hf.FolderName
+		fmt.Println("dir:", disdir)
+		CreateDirIfNotExist(disdir)
 		for _, hf1 := range hf.Folders {
-			walk(hf1)
+			Walk(disdir, hf1)
 		}
 		for _, hf1 := range hf.Files {
-			walk(hf1)
+			Walk(disdir, hf1)
 		}
 	} else if hf.FileName != "" {
-		fmt.Println(hf.FileName)
-		if !fileExists(hf.FileName) {
+		disfile := filedir + "/" + hf.FileName
+		fmt.Println("fil:", disfile)
+		fmt.Println("\t", hf.ID)
+		if err := DownloadFileIfNotExist(disfile, hf.ID); err != nil {
+		} else {
 		}
-		fmt.Println(hf.ID)
 	}
 }
 
-func fileExists(filepath string) bool {
+func FileExists(filepath string) bool {
 	return false
 }
 
-func DownloadFile(filepath string, url string) error {
-	// Get the data
-	resp, err := http.Get(url)
-	if err != nil {
+func DownloadFileIfNotExist(filepath string, fileid string) error {
+	if _, err := os.Stat(filepath); os.IsNotExist(err) {
+		fmt.Println(filepath, "does not exist, GET-ting..")
+		// Get the data
+		url := os.ExpandEnv("https://ivle.nus.edu.sg/api/downloadfile.ashx?APIKey=$LAPIkey&AuthToken=$AuthToken&ID=" + fileid + "&target=workbin")
+		resp, err := http.Get(url)
+		if err != nil {
+			return err
+		}
+		// cprint(url)
+		// cprint(resp.Body)
+		defer resp.Body.Close()
+		fmt.Println(filepath, "GET completed")
+
+		// Create the file
+		fmt.Println("creating", filepath + "..")
+		out, err := os.Create(filepath)
+		if err != nil {
+			return err
+		}
+		defer out.Close()
+		fmt.Println(filepath, "created")
+
+		// Write the body to file
+		fmt.Println("Writing GET response to", filepath + "..")
+		_, err = io.Copy(out, resp.Body)
+		fmt.Println("Write completed")
 		return err
 	}
-	cprint(url)
-	cprint(resp.Body)
-	defer resp.Body.Close()
+	return nil
+}
 
-	// Create the file
-	out, err := os.Create(filepath)
-	if err != nil {
-		return err
+func CreateDirIfNotExist(dir string) {
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		err = os.MkdirAll(dir, 0755)
+		if err != nil {
+			panic(err)
+		}
 	}
-	defer out.Close()
-
-	// Write the body to file
-	_, err = io.Copy(out, resp.Body)
-	return err
 }
 
 func tprint(v interface{}) {
