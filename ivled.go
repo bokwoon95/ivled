@@ -81,14 +81,15 @@ type HomoFolder struct {
 	ID       string
 }
 
+// Globally accessible variables
+var ivleconfig IVLEConfig
+var downloadedfiles []string
 var filetype_exclusionlist = map[string]bool{
 	"mp4": true,
 	"mp3": true,
 	"mov": true,
 	"avi": true,
 }
-
-var ivleconfig IVLEConfig
 
 func main() {
 
@@ -133,6 +134,14 @@ func main() {
 		for _, hf := range homofolders {
 			IVLEWalk(module.ModuleCode, os.ExpandEnv(ivleconfig.DownloadLocation), hf)
 		}
+	}
+	fmt.Println("==================================")
+	fmt.Println("Download Summary")
+	fmt.Println("==================================")
+	fmt.Println("There were", len(downloadedfiles), "downloaded files")
+	for i, s := range downloadedfiles {
+		fmt.Print(i+1)
+		fmt.Println(".", s)
 	}
 }
 
@@ -330,6 +339,9 @@ func DownloadFileIfNotExist(filepath string, fileid string, filetype string) err
 
 		// Write the body to file
 		_, err = io.Copy(out, resp.Body)
+
+		// Append to list of downloaded files
+		downloadedfiles = append(downloadedfiles, filepath)
 		return err
 	}
 	return nil
