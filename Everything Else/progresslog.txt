@@ -32,6 +32,8 @@
 
 ✓ Make syscalls to macOS's `open` to get the user's LAPIkey and AuthToken
 
+✗ Add install script for macOS users (I can't seem to figure out how to get curl to download a binary from github without some kind of auth token)
+
 ✗ Add `ivled help`, `ivled config`, `ivled deleteconfig` and `ivled download` commands
     ✗ When configuring the download root path, allow users to specify a filepath. If a folder name without slashes is provided, create the folder in the current directory instead. This will be better for non-technical users, just ask them to navigate to the correct folder in Finder, open a terminal, then run the `ivle config` command.
     ✗ `ivled config` asks if the user would like to go through the edit process or just open their config file directly
