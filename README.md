@@ -8,6 +8,7 @@ Tested on macOS Mojave, Windows support coming. By default, [mp4 mp3 mov avi] fi
 1. Use Chrome (Safari downloads .dms files instead) to download ivled file (marked by "<-- macOS USERS DOWNLOAD THIS"). Make sure it downloads into your 'Downloads' folder.
 2. Open Terminal. Run this command
 ```
-cp ~/Downloads/ivled /usr/local/bin
+mv ~/Downloads/ivled /usr/local/bin
+chmod a+x /usr/local/bin/ivled
 ```
 3. That's it. Run `ivled` to begin.
