@@ -140,6 +140,7 @@ func IVLEGetRequest(url string) (ivleresponse IVLEResponse, err error) {
 	json.Unmarshal(body, &ivleresponse)
 	if ivleresponse.Comments == "Invalid login!" {
 		err = errors.New("Invalid login!")
+		log.Fatalln(err)
 	}
 	return ivleresponse, err
 }
@@ -264,7 +265,7 @@ func SetupConfig() IVLEConfig {
 	})
 	moduleinfos = MapModuleInfo(moduleinfos, func(mi ModuleInfo) ModuleInfo {
 		fmt.Println("GETting module info for :", mi.ModuleCode)
-		ivleresponse, _ := IVLEGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken +"&IncludeAllInfo=false&ModuleCode=" + mi.ModuleCode)
+		ivleresponse, _ := IVLEGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&IncludeAllInfo=false&ModuleCode=" + mi.ModuleCode)
 		// resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken +"&IncludeAllInfo=false&ModuleCode=" + mi.ModuleCode))
 		// body, _ := ioutil.ReadAll(resp.Body)
 		// var ivleresponse IVLEResponse
