@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -17,17 +18,18 @@ import (
 	"time"
 )
 
-var ivleroot = os.ExpandEnv("$HOME/NUS")
+var ivleroot = os.ExpandEnv("$HOME/Dropbox")
 
 type IVLEConfig struct {
-	LAPIkey          string
-	AuthToken        string
-	AuthTokenExpiry  string
-	StudentID        string
-	AcadYear         string
-	Semester         string
-	DownloadLocation string
-	ModulesThisSem   []ModuleInfo
+	LAPIkey           string
+	AuthToken         string
+	AuthTokenExpiry   string
+	StudentID         string
+	AcadYear          string
+	Semester          string
+	DownloadLocation  string
+	ExcludedFileTypes map[string]bool
+	ModulesThisSem    []ModuleInfo
 }
 
 type IVLEResponse struct {
@@ -92,8 +94,30 @@ func main() {
 	moduleinfos := ivleconfig.ModulesThisSem
 
 	for _, module := range moduleinfos {
-		DownloadWorkbin(module.ModuleCode, module.ID)
+		// DownloadWorkbin(module.ModuleCode, module.ID)
+		fmt.Println("==================================")
+		fmt.Println("Downloading", module.ModuleCode, "Workbin")
+		fmt.Println("==================================")
+		ivleresponse, _ := IVLEGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey="+ivleconfig.LAPIkey+"&AuthToken="+ivleconfig.AuthToken+"&CourseID="+module.ID)
+
+		var homofolders []HomoFolder
+		json.Unmarshal(ivleresponse.Results, &homofolders)
+
+		CreateDirIfNotExist(ivleroot)
+		for _, hf := range homofolders {
+			Walk(module.ModuleCode, ivleroot, hf)
+		}
 	}
+}
+
+func IVLEGetRequest(url string) (ivleresponse IVLEResponse, err error) {
+	resp, _ := http.Get(url)
+	body, _ := ioutil.ReadAll(resp.Body)
+	json.Unmarshal(body, &ivleresponse)
+	if ivleresponse.Comments == "Invalid login!" {
+		err = errors.New("Invalid login!")
+	}
+	return ivleresponse, err
 }
 
 func SetupConfig() IVLEConfig {
@@ -117,13 +141,13 @@ func SetupConfig() IVLEConfig {
 	// Get AuthToken
 	authtoken_url := "https://ivle.nus.edu.sg/api/login/?apikey=" + LAPIkey
 	fmt.Println("A browser should have opened the URL " + authtoken_url + " (you will likely see a blank page, if so just visit the url manually). Enter your IVLE credentials, copy the long authorization token (Cmd+A to select all), paste it back here (Cmd+V for macOS) then press Enter")
-	// openbrowser(authtoken_url) // IVLE disabled it or something, that's why all IVLEDownloaders have stopped 'working'. Not to worry we can tell the user to manually visit the URL.
+	openbrowser(authtoken_url) // IVLE disabled it or something, that's why all IVLEDownloaders have stopped 'working'. Not to worry we can tell the user to manually visit the URL.
 	fmt.Print("Authorization Token: ")
 	AuthToken, _ := reader.ReadString('\n')
 	fmt.Println(AuthToken)
 	ivleconfig.AuthToken = strings.Trim(AuthToken, " \n")
 
-	//TODO obtain authtoken expiriy with https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey={System.String}&Token={System.String}
+	//TODO obtain authtoken expiry with https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey={System.String}&Token={System.String}
 
 	// Get AcadYear and Semester
 	month, _ := strconv.Atoi(time.Now().Format("1"))
@@ -160,7 +184,6 @@ func SetupConfig() IVLEConfig {
 	ivleconfig.DownloadLocation = strings.Trim(DownloadLocation, " \n")
 
 	// Get ModulesThisSem
-	// moduleinfos := GetModulesTaken(ivleconfig)
 	resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&StudentID=" + ivleconfig.StudentID))
 	body, _ := ioutil.ReadAll(resp.Body)
 	var ivleresponse IVLEResponse
@@ -199,6 +222,7 @@ func SetupConfig() IVLEConfig {
 	return ivleconfig
 }
 
+// Marked for deletion once everything is refactored
 func GetModulesTaken(ivc IVLEConfig) (moduleinfos []ModuleInfo) {
 	LAPIrequestmodules := true
 
@@ -254,15 +278,18 @@ func GetModulesTaken(ivc IVLEConfig) (moduleinfos []ModuleInfo) {
 	return
 }
 
+// Marked for deletion, has already been merged into main()
 func DownloadWorkbin(ModuleCode string, ModuleID string) {
 	fmt.Println("==================================")
 	fmt.Println("Downloading", ModuleCode, "Workbin")
 	fmt.Println("==================================")
 	resp, _ := http.Get(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=" + ModuleID))
 	body, _ := ioutil.ReadAll(resp.Body)
+	// ivleresponse, _ := IVLEGetRequest(os.ExpandEnv("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=" + ModuleID))
 
 	var homofolders HomoFolder
 	json.Unmarshal(body, &homofolders)
+	// json.Unmarshal(ivleresponse.Results, &homofolders)
 
 	CreateDirIfNotExist(ivleroot)
 	Walk(ModuleCode, ivleroot, homofolders)
@@ -276,7 +303,7 @@ func Walk(modulecode string, filedir string, hf HomoFolder) {
 	} else if hf.Title != "" {
 		disdir := filedir + "/" + modulecode
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") {
-			fmt.Println("Folder     :", disdir)
+			fmt.Println("Folder      :", disdir)
 			CreateDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
 				Walk(modulecode, disdir, hf1)
@@ -285,7 +312,7 @@ func Walk(modulecode string, filedir string, hf HomoFolder) {
 	} else if hf.FolderName != "" {
 		disdir := filedir + "/" + hf.FolderName
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") {
-			fmt.Println("Folder     :", disdir)
+			fmt.Println("Folder      :", disdir)
 			CreateDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
 				Walk(modulecode, disdir, hf1)
@@ -302,20 +329,22 @@ func Walk(modulecode string, filedir string, hf HomoFolder) {
 	}
 }
 
+//===============================//
+// HERE LIE THE HELPER FUNCTIONS //
+//===============================//
+
 func DownloadFileIfNotExist(filepath string, fileid string, filetype string) error {
 	if filetype_exclusionlist[strings.ToLower(filetype)] {
 		return nil
 	}
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
 		// Get the data
-		fmt.Println("Downloading:", filepath)
+		fmt.Println("Downloading :", filepath)
 		url := os.ExpandEnv("https://ivle.nus.edu.sg/api/downloadfile.ashx?APIKey=$LAPIkey&AuthToken=$AuthToken&ID=" + fileid + "&target=workbin")
 		resp, err := http.Get(url)
 		if err != nil {
 			return err
 		}
-		// cprint(url)
-		// cprint(resp.Body)
 		defer resp.Body.Close()
 
 		// Create the file

@@ -18,20 +18,23 @@
 
 ✓ Based on modules_taken.json, download all relevant files into workbin
 
-✗ Remove Results[] from HomoFolder struct and use IVLERequest struct to unwrap Results[] instead
+✓ Remove Results[] from HomoFolder struct and use IVLERequest struct to unwrap Results[] instead
     Do error check for `Comments: "Invalid login!"`!
+    Do error check for `Comments: "Valid login!"`!
 
 ✓ shell script should generate the $AcadYear and $Semester variables automatically based on the system date. But first, check with the user if that is indeed the date (system date might be off)
 ✓ Instead of setting environment variables, maybe the config variables like StudentID and AcadYear and LAPIkey and AuthToken should be generated upfront and saved into a config.json, where all the module info (currently in modules_taken.json) should also be stored?
-    • Make the LAPIkey and AuthToken generation as robust as possible. Opt for dumb, stupid methods that are guaranteed to work with backup routes available rather than clever ways of automatically getting information that may break and leave students hanging.
+    • Make the LAPIkey and AuthToken generation as robust as possible. Opt for dumb, stupid methods that are guaranteed to work with backup routes available rather than clever ways of automatically getting information that may break
 
-✗ Refactor IVLERequest into its own function
+✓ Refactor IVLERequest into its own function
     • It can also check the comments if the login is valid every time and return an error if the lapikey or authtoken failed
+    ✗ make SetupConfig() use IVLERequest as well (It's a bit of a pain to regenerate ~/.config/ivled.json)
 
 ✓ Make syscalls to macOS's `open` to get the user's LAPIkey and AuthToken
 
 ✗ Add `ivled help`, `ivled config`, `ivled deleteconfig` and `ivled download` commands
     ✗ When configuring the download root path, allow users to specify a filepath. If a folder name without slashes is provided, create the folder in the current directory instead. This will be better for non-technical users, just ask them to navigate to the correct folder in Finder, open a terminal, then run the `ivle config` command.
+    ✗ `ivled config` asks if the user would like to go through the edit process or just open their config file directly
 
 ✓ Trim all user input in case they accidentally paste in extra spaces
 
@@ -39,6 +42,16 @@
 
 ✓ Unacceptable filetypes: video, audio, anything above 5MB
     Exclusion list: mp4, mov, mp3, avi
+
+✗ Use TOML instead of JSON for the config file i.e. ivled.json to ivled.toml.
+    • That way I can be more confident in asking non-tech users to hand-edit their config files without resorting to inputting them one by one in the command line
+
+✗ Let user configure his own filetype ignore list
+✗ Let user configure his own filepath ignore list
+    • How should this be gracefully configured? Using a TUI (big undertaking)? Asking users to be familiar with filepaths, complete with instructions on how to configure them? (easier to pull off, unsure if it will put off non-techy users)
+    • If I change the config file from JSON to TOML, it's a lot easier to direct users on how to add new filepaths for exclusion.
+
+✗ Stop ignoring error return values and address every one of them
 
 Known Limitations
 =================
