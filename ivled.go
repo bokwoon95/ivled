@@ -138,9 +138,14 @@ func main() {
 	fmt.Println("==================================")
 	fmt.Println("Download Summary")
 	fmt.Println("==================================")
-	fmt.Println("There were", len(downloadedfiles), "downloaded files")
+	l := len(downloadedfiles)
+	if l == 1 {
+		fmt.Println("There was 1 downloaded file")
+	} else {
+		fmt.Println("There were", l, "downloaded files")
+	}
 	for i, s := range downloadedfiles {
-		fmt.Print(i+1)
+		fmt.Print(i + 1)
 		fmt.Println(".", s)
 	}
 }
