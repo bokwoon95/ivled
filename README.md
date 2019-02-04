@@ -1,8 +1,6 @@
 # ivled
 IVLE downloader lite. Simple command line wrapper over IVLE LAPI.
-All the source code is in a single `ivled.go` file because the IVLE API is not complicated. You just need to make some HTTP requests to obtain a file list, parse some JSON, make some more HTTP requests to download the files. (You don't need OOP 🙄)
-
-There is no package setup, everything is in one binary file. There is no diving into source code to set some environment variables, ivled reads from its own config.json which it will set up together with you.
+All the source code is in a single `ivled.go` file because the IVLE API is not complicated. There is no package setup, everything is in one binary file. There is no diving into source code to set some environment variables, ivled reads from its own config.json which it will set up together with you. It's fast and it's lightweight, and it might sometimes give you segmentation faults.
 
 Tested on macOS Mojave, <s>Windows support coming</s> Windows support delayed because of some weird issues and I really don't feel like developing on Windows right now.
 
