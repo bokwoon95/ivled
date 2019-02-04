@@ -1,4 +1,5 @@
 # ivled
+[![asciicast](https://asciinema.org/a/5IhHVFw7slPu0J1gGHSsOdMFH.png)](https://asciinema.org/a/5IhHVFw7slPu0J1gGHSsOdMFH)
 IVLE downloader lite. Simple command line wrapper over IVLE LAPI. There is no package setup (looking at you python), everything is in one binary file. There is no diving into source code to set some environment variables, ivled reads from its own config.json which it will set up together with you. It's fast and it's lightweight, and it might sometimes give you segmentation faults✌️.
 
 Tested on macOS Mojave, <s>Windows support coming</s> Windows support delayed because of some weird issues and I really don't feel like developing on Windows right now.
