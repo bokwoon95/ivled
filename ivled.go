@@ -116,6 +116,7 @@ func main() {
 		// if l := len(ivleconfig.DownloadLocation); l > 0 && ivleconfig.DownloadLocation[l-1] == '/' {
 		// 	ivleconfig.DownloadLocation = ivleconfig.DownloadLocation[:l-1]
 		// }
+		ivleconfig.DownloadLocation = strings.TrimSuffix(ivleconfig.DownloadLocation, fpdlm)
 		if len(ivleconfig.ModulesThisSem) >= 0 {
 			doSetupConfig = false
 		}
@@ -189,29 +190,35 @@ func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
 	// } else if hf.Title != "" {
 	if hf.Title != "" {
 		disdir := filedir + fpdlm + modulecode
-		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") {
+		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") && !ivleconfig.ExcludedFilePaths[disdir] {
 			fmt.Println("Folder      :", disdir)
 			CreateDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
 				IVLEWalk(modulecode, disdir, hf1)
 			}
+		} else {
+			fmt.Println("Ignored     :", disdir)
 		}
 	} else if hf.FolderName != "" {
 		disdir := filedir + fpdlm + hf.FolderName
-		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") {
+		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") && !ivleconfig.ExcludedFilePaths[disdir] {
 			fmt.Println("Folder      :", disdir)
 			CreateDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
 				IVLEWalk(modulecode, disdir, hf1)
 			}
+		} else {
+			fmt.Println("Ignored     :", disdir)
 		}
 		for _, hf1 := range hf.Files {
 			IVLEWalk(modulecode, disdir, hf1)
 		}
 	} else if hf.FileName != "" {
 		disfile := filedir + fpdlm + hf.FileName
-		if err := DownloadFileIfNotExist(disfile, hf.ID, hf.FileType); err != nil {
+		if !ivleconfig.ExcludedFileTypes[strings.ToLower(hf.FileType)] && !ivleconfig.ExcludedFilePaths[disfile] {
+			DownloadFileIfNotExist(disfile, hf.ID)
 		} else {
+			fmt.Println("Ignored     :", disfile)
 		}
 	}
 }
@@ -331,6 +338,7 @@ func SetupConfig() IVLEConfig {
 	})
 	ivleconfig.ModulesThisSem = moduleinfos
 
+	// Set Up the initial ExcludedFileTypes and ExcludedFilePaths
 	excludedfiletypes := map[string]bool{
 		"mp4": true,
 		"mp3": true,
@@ -338,9 +346,7 @@ func SetupConfig() IVLEConfig {
 		"avi": true,
 	}
 	excludedfilepaths := map[string]bool{}
-	// Set Up the initial ExcludedFileTypes and ExcludedFilePaths
 	ivleconfig.ExcludedFileTypes = excludedfiletypes
-	// fpdlm
 	excludedfilepaths[DownloadLocation+fpdlm+"Folder1"] = true
 	excludedfilepaths[DownloadLocation+fpdlm+"Folder2"] = true
 	ivleconfig.ExcludedFilePaths = excludedfilepaths
@@ -362,10 +368,7 @@ func SetupConfig() IVLEConfig {
 // HERE LIE THE HELPER FUNCTIONS //
 //===============================//
 
-func DownloadFileIfNotExist(filepath string, fileid string, filetype string) error {
-	if ivleconfig.ExcludedFileTypes[strings.ToLower(filetype)] {
-		return nil
-	}
+func DownloadFileIfNotExist(filepath string, fileid string) error {
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
 		// Get the data
 		fmt.Println("Downloading :", filepath)
