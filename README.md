@@ -15,6 +15,7 @@ You can also add folders and files you want to ignore to your config file. Right
 `ivled reset` : Resets your config by deleting the old file and running through the initial setup again.
 
 # macOS Installation
+[![ALT_IMAGE_HERE](https://img.youtube.com/vi/AQ0u4V9l2aQ/0.jpg)](https://youtu.be/AQ0u4V9l2aQ)
 1. Use Chrome (not Safari) to download ['ivled' file](https://github.com/bokwoon95/ivled/blob/master/ivled). Make sure it downloads into your 'Downloads' folder.
 2. Open Terminal. Run this command
 ```
