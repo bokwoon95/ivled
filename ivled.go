@@ -93,10 +93,7 @@ func main() {
 			configfile := ConfigFolder() + "config.json"
 			if _, err := os.Stat(configfile); err == nil {
 				openfile(ConfigFolder() + "config.json")
-			} else if os.IsNotExist(err) {
-				fmt.Println(configfile, "does not exist. Run `ivled` first to set it up.")
 			}
-			os.Exit(0)
 		case "reset":
 			deletefile(ConfigFolder() + "config.json")
 			fmt.Println(ConfigFolder() + "config.json", "has been deleted")
@@ -261,8 +258,7 @@ func SetupConfig() IVLEConfig {
 	ivleconfig.LAPIkey = LAPIkey
 
 	// Get AuthToken
-	authtoken_url := "https://ivle.nus.edu.sg/api/login/?apikey=" + LAPIkey
-	fmt.Println("\nPlease visit the URL " + authtoken_url + ". Enter your IVLE credentials, copy the long authorization token (Ctrl+A/Cmd+A), paste it back here then press Enter")
+	fmt.Println("\nPlease visit the URL https://ivle.nus.edu.sg/api/login/?apikey=" + LAPIkey + ". Enter your IVLE credentials, copy the long authorization token (Ctrl+A/Cmd+A), paste it back here then press Enter")
 	// openbrowser(authtoken_url) // IVLE disabled it or something, that's why all IVLEDownloaders have stopped 'working'. Not to worry we can tell the user to manually visit the URL.
 	fmt.Print("Authorization Token: ")
 	AuthToken, _ := reader.ReadString('\n')
