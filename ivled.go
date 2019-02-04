@@ -85,15 +85,20 @@ type HomoFolder struct {
 // Globally accessible variables
 var ivleconfig IVLEConfig
 var downloadedfiles []string
-var excludedfiletypes = map[string]bool{
-	"mp4": true,
-	"mp3": true,
-	"mov": true,
-	"avi": true,
-}
-var excludedfilepaths = map[string]bool{}
+var fpdlm string
 
 func main() {
+	// Setup the fpdlm: filepath delimiters
+	switch runtime.GOOS {
+	case "linux":
+		fpdlm = "/"
+	case "windows":
+		fpdlm = "\\"
+	case "darwin":
+		fpdlm = "/"
+	default:
+		log.Fatalf("unsupported platform")
+	}
 
 	// Read in the user config into struct ivleconfig
 	// If it doesn't exist we'll have to set it up the first time
@@ -183,7 +188,7 @@ func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
 	// 	}
 	// } else if hf.Title != "" {
 	if hf.Title != "" {
-		disdir := filedir + "/" + modulecode
+		disdir := filedir + fpdlm + modulecode
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") {
 			fmt.Println("Folder      :", disdir)
 			CreateDirIfNotExist(disdir)
@@ -192,7 +197,7 @@ func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
 			}
 		}
 	} else if hf.FolderName != "" {
-		disdir := filedir + "/" + hf.FolderName
+		disdir := filedir + fpdlm + hf.FolderName
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") {
 			fmt.Println("Folder      :", disdir)
 			CreateDirIfNotExist(disdir)
@@ -204,14 +209,14 @@ func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
 			IVLEWalk(modulecode, disdir, hf1)
 		}
 	} else if hf.FileName != "" {
-		disfile := filedir + "/" + hf.FileName
+		disfile := filedir + fpdlm + hf.FileName
 		if err := DownloadFileIfNotExist(disfile, hf.ID, hf.FileType); err != nil {
 		} else {
 		}
 	}
 }
 
-// If ~/.config/ivled.json is missing (e.g. the user is running ivled for the first time), this function will create it
+// If configfile is missing (e.g. the user is running ivled for the first time), this function will create it
 func SetupConfig() IVLEConfig {
 	// create config struct
 	var ivleconfig IVLEConfig
@@ -264,15 +269,15 @@ func SetupConfig() IVLEConfig {
 	ivleconfig.Semester = strings.Trim(Semester, " \n\t")
 
 	// Get DownloadLocation
-	fmt.Println("\nWhere would you like to download your IVLE folders to? Leave blank to download them into the current folder, otherwise provide a path like ~/Downloads/NUS (~ represents your home directory, if you know where that is). You can always edit this later.")
+	currdir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("\nWhere would you like to download your IVLE folders to? Leave blank to download them into the current folder (" + currdir + "), otherwise provide a path like ~/Downloads/NUS (~ representing your home directory). You can always edit this later.")
 	fmt.Print("ivled Download Location: ")
 	DownloadLocation, _ := reader.ReadString('\n')
 	DownloadLocation = strings.Trim(DownloadLocation, " \n\t")
 	if DownloadLocation == "" {
-		currdir, err := os.Getwd()
-		if err != nil {
-			log.Fatal(err)
-		}
 		DownloadLocation = currdir
 	}
 	switch runtime.GOOS {
@@ -326,10 +331,18 @@ func SetupConfig() IVLEConfig {
 	})
 	ivleconfig.ModulesThisSem = moduleinfos
 
+	excludedfiletypes := map[string]bool{
+		"mp4": true,
+		"mp3": true,
+		"mov": true,
+		"avi": true,
+	}
+	excludedfilepaths := map[string]bool{}
 	// Set Up the initial ExcludedFileTypes and ExcludedFilePaths
 	ivleconfig.ExcludedFileTypes = excludedfiletypes
-	excludedfilepaths[DownloadLocation+"/Folder1"] = true
-	excludedfilepaths[DownloadLocation+"/Folder2"] = true
+	// fpdlm
+	excludedfilepaths[DownloadLocation+fpdlm+"Folder1"] = true
+	excludedfilepaths[DownloadLocation+fpdlm+"Folder2"] = true
 	ivleconfig.ExcludedFilePaths = excludedfilepaths
 
 	// Write Data config file for writing to

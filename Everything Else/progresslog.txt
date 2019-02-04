@@ -26,9 +26,9 @@
 ✓ Instead of setting environment variables, maybe the config variables like StudentID and AcadYear and LAPIkey and AuthToken should be generated upfront and saved into a config.json, where all the module info (currently in modules_taken.json) should also be stored?
     • Make the LAPIkey and AuthToken generation as robust as possible. Opt for dumb, stupid methods that are guaranteed to work with backup routes available rather than clever ways of automatically getting information that may break
 
-✓ Refactor IVLERequest into its own function
+✓ Refactor IVLEGetRequest into its own function
     • It can also check the comments if the login is valid every time and return an error if the lapikey or authtoken failed
-    ✓ make SetupConfig() use IVLERequest as well (It's a bit of a pain to regenerate ~/.config/ivled.json)
+    ✓ make SetupConfig() use IVLEGetRequest as well (It's a bit of a pain to regenerate ~/.config/ivled.json)
 
 ✓ Make syscalls to macOS's `open` to get the user's LAPIkey and AuthToken
 
@@ -41,6 +41,8 @@
     `ivled help`: shows help in the terminal
 
 ✗ Respect ivleconfig.ExludedFileTypes and ivleconfig.ExludedFilePaths when downloading
+
+✓ IVLEWalk should append either "\\" or "/" according to the OS
 
 ✗ dump downloaded file history into a running log so that `ivled log` can tell you which were the most recently downloaded files
 
