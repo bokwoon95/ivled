@@ -94,11 +94,16 @@ func main() {
 		cmd := argslist[1]
 		switch cmd {
 		case "config":
-			openfile(ConfigFolder() + "config.json")
+			configfile := ConfigFolder() + "config.json"
+			if _, err := os.Stat(configfile); err == nil {
+				openfile(ConfigFolder() + "config.json")
+			} else if os.IsNotExist(err) {
+				fmt.Println(configfile, "does not exist. Run `ivled` first to set it up.")
+			}
 			os.Exit(0)
 		case "reset":
 			deletefile(ConfigFolder() + "config.json")
-			fmt.Println(ConfigFolder() + "config.json", "deleted")
+			fmt.Println(ConfigFolder() + "config.json", "has been deleted")
 			os.Exit(0)
 		case "help":
 			fmt.Println("I am here to help!")
