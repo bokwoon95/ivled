@@ -20,6 +20,6 @@ You can also add folders and files you want to ignore to your config file. Right
 mv ~/Downloads/ivled /usr/local/bin
 chmod a+x /usr/local/bin/ivled
 ```
-3. Run `ivled` to begin. You will go through an initial setup process, after that your config settings will be written to `~/.config/ivled.json`. The next time, just run `ivled` to pull the latest files from IVLE.
+3. Run `ivled` to begin. You will go through an initial setup process, after that your config settings will be written to `~/.config/ivled/config.json`. The next time, just run `ivled` to pull the latest files from IVLE.
 
-If you want to inspect or edit your config anytime, just run the command `open ~/.config/ivled.json`. <sub>(JSON is not a friendly format to edit config files in, I plan to eventually move over to TOML.)</sub>
+If you want to inspect or edit your config anytime, just run the command `ivled config`. <sub>(JSON is not a friendly format to edit config files in, I plan to eventually move over to TOML.)</sub>
