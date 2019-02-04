@@ -34,13 +34,13 @@
 
 ✗ Add install script for macOS users (I can't seem to figure out how to get curl to download a binary from github without some kind of auth token)
 
-✗ Parse CLI arguments:
+✓ Parse CLI arguments:
     `ivled`: downloads ivle files, or if first time running will setup ivled
     `ivled config`: opens ivled config.json
     `ivled reset`: deletes ivled config.json
     `ivled help`: shows help in the terminal
 
-✗ Respect ivleconfig.ExludedFileTypes and ivleconfig.ExludedFilePaths when downloading
+✓ Respect ivleconfig.ExludedFileTypes and ivleconfig.ExludedFilePaths when downloading
 
 ✓ IVLEWalk should append either "\\" or "/" according to the OS
 

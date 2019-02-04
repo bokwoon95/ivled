@@ -88,6 +88,26 @@ var downloadedfiles []string
 var fpdlm string
 
 func main() {
+	// Parse the CLI arguments
+	argslist := os.Args
+	if len(argslist) >= 2 {
+		cmd := argslist[1]
+		switch cmd {
+		case "config":
+			openfile(ConfigFolder() + "config.json")
+			os.Exit(0)
+		case "reset":
+			deletefile(ConfigFolder() + "config.json")
+			fmt.Println(ConfigFolder() + "config.json", "deleted")
+		case "help":
+			fmt.Println("I am here to help!")
+			os.Exit(0)
+		default:
+			fmt.Println("Unknown command '" + cmd + "': ignoring")
+			os.Exit(0)
+		}
+	}
+
 	// Setup the fpdlm: filepath delimiters
 	switch runtime.GOOS {
 	case "linux":
@@ -485,6 +505,23 @@ func openfile(filepath string) {
 		err = exec.Command("notepad", filepath).Start()
 	case "darwin":
 		err = exec.Command("open", filepath).Start()
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func deletefile(filepath string) {
+	var err error
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("rm", filepath).Start()
+	case "windows":
+		err = exec.Command("del", filepath).Start()
+	case "darwin":
+		err = exec.Command("rm", filepath).Start()
 	default:
 		err = fmt.Errorf("unsupported platform")
 	}
