@@ -93,6 +93,7 @@ func main() {
 			configfile := ConfigFolder() + "config.json"
 			if _, err := os.Stat(configfile); err == nil {
 				openfile(ConfigFolder() + "config.json")
+				os.Exit(0)
 			}
 		case "reset":
 			deletefile(ConfigFolder() + "config.json")
