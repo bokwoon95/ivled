@@ -34,9 +34,15 @@
 
 ✗ Add install script for macOS users (I can't seem to figure out how to get curl to download a binary from github without some kind of auth token)
 
-✗ Add `ivled help`, `ivled config`, `ivled deleteconfig` and `ivled download` commands
-    ✗ When configuring the download root path, allow users to specify a filepath. If a folder name without slashes is provided, create the folder in the current directory instead. This will be better for non-technical users, just ask them to navigate to the correct folder in Finder, open a terminal, then run the `ivle config` command.
-    ✗ `ivled config` asks if the user would like to go through the edit process or just open their config file directly
+✗ Parse CLI arguments:
+    `ivled`: downloads ivle files, or if first time running will setup ivled
+    `ivled config`: opens ivled config.json
+    `ivled reset`: deletes ivled config.json
+    `ivled help`: shows help in the terminal
+
+✗ Respect ivleconfig.ExludedFileTypes and ivleconfig.ExludedFilePaths when downloading
+
+✗ dump downloaded file history into a running log so that `ivled log` can tell you which were the most recently downloaded files
 
 ✓ Trim all user input in case they accidentally paste in extra spaces
 
@@ -44,6 +50,8 @@
 
 ✓ Unacceptable filetypes: video, audio, anything above 5MB
     Exclusion list: mp4, mov, mp3, avi
+
+✗ If still using JSON, mention in a guide that ALL LAST ENTRIES IN JSON MUST NOT HAVE COMMAS. Otherwise parsing will fail.
 
 ✗ Use TOML instead of JSON for the config file i.e. ivled.json to ivled.toml.
     • That way I can be more confident in asking non-tech users to hand-edit their config files without resorting to inputting them one by one in the command line

@@ -28,6 +28,7 @@ type IVLEConfig struct {
 	Semester          string
 	DownloadLocation  string
 	ExcludedFileTypes map[string]bool
+	ExcludedFilePaths map[string]bool
 	ModulesThisSem    []ModuleInfo
 }
 
@@ -84,20 +85,22 @@ type HomoFolder struct {
 // Globally accessible variables
 var ivleconfig IVLEConfig
 var downloadedfiles []string
-var filetype_exclusionlist = map[string]bool{
+var excludedfiletypes = map[string]bool{
 	"mp4": true,
 	"mp3": true,
 	"mov": true,
 	"avi": true,
 }
+var excludedfilepaths = map[string]bool{}
 
 func main() {
 
 	// Read in the user config into struct ivleconfig
 	// If it doesn't exist we'll have to set it up the first time
 	doSetupConfig := true
-	if _, err := os.Stat(os.ExpandEnv("$HOME/.config/ivled.json")); err == nil {
-		jsonbytes, err := ioutil.ReadFile(os.ExpandEnv("$HOME/.config/ivled.json"))
+	cfg_filename := ConfigFolder() + "config.json"
+	if _, err := os.Stat(cfg_filename); err == nil {
+		jsonbytes, err := ioutil.ReadFile(cfg_filename)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -105,6 +108,9 @@ func main() {
 		if err != nil {
 			log.Fatalln(err)
 		}
+		// if l := len(ivleconfig.DownloadLocation); l > 0 && ivleconfig.DownloadLocation[l-1] == '/' {
+		// 	ivleconfig.DownloadLocation = ivleconfig.DownloadLocation[:l-1]
+		// }
 		if len(ivleconfig.ModulesThisSem) >= 0 {
 			doSetupConfig = false
 		}
@@ -214,24 +220,27 @@ func SetupConfig() IVLEConfig {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("What is your student ID? (e.g. e0031878): ")
 	StudentID, _ := reader.ReadString('\n')
+	StudentID = strings.Trim(StudentID, " \n\t")
 	fmt.Println(StudentID)
-	ivleconfig.StudentID = strings.Trim(StudentID, " \n")
+	ivleconfig.StudentID = StudentID
 
 	// Get LAPIkey
-	fmt.Println("A browser should have opened the URL https://ivle.nus.edu.sg/LAPI/default.aspx (if not, open it manually). Copy your LAPI key, paste it back here (Cmd+V for macOS) then press Enter. (If that doesn't work just use my LAPI key wRDGB8jT2IbKNRBrYnd6F)")
+	fmt.Println("A browser should have opened the URL https://ivle.nus.edu.sg/LAPI/default.aspx (if not, open it manually). Copy your LAPI key, paste it back here then press Enter. (If that doesn't work just use my LAPI key wRDGB8jT2IbKNRBrYnd6F)")
 	openbrowser("https://ivle.nus.edu.sg/LAPI/default.aspx")
 	fmt.Print("LAPI key: ")
 	LAPIkey, _ := reader.ReadString('\n')
-	ivleconfig.LAPIkey = strings.Trim(LAPIkey, " \n")
+	LAPIkey = strings.Trim(LAPIkey, " \n\t")
+	ivleconfig.LAPIkey = LAPIkey
 
 	// Get AuthToken
 	authtoken_url := "https://ivle.nus.edu.sg/api/login/?apikey=" + LAPIkey
-	fmt.Println("\nPlease visit the URL " + authtoken_url + ". Enter your IVLE credentials, copy the long authorization token (Cmd+A to select all), paste it back here (Cmd+V for macOS) then press Enter")
+	fmt.Println("\nPlease visit the URL " + authtoken_url + ". Enter your IVLE credentials, copy the long authorization token (Ctrl+A/Cmd+A), paste it back here then press Enter")
 	// openbrowser(authtoken_url) // IVLE disabled it or something, that's why all IVLEDownloaders have stopped 'working'. Not to worry we can tell the user to manually visit the URL.
 	fmt.Print("Authorization Token: ")
 	AuthToken, _ := reader.ReadString('\n')
+	AuthToken = strings.Trim(AuthToken, " \n\t")
 	fmt.Println(AuthToken)
-	ivleconfig.AuthToken = strings.Trim(AuthToken, " \n")
+	ivleconfig.AuthToken = AuthToken
 
 	//TODO obtain authtoken expiry with https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey={System.String}&Token={System.String}
 
@@ -250,25 +259,37 @@ func SetupConfig() IVLEConfig {
 		log.Fatalf("Error 01: Wtf? Your month falls outside 1-12")
 	}
 	AcadYear := sem1year + "/" + sem2year
-	fmt.Println(AcadYear, Semester)
-	ivleconfig.AcadYear = strings.Trim(AcadYear, " \n")
-	ivleconfig.Semester = strings.Trim(Semester, " \n")
+	fmt.Println("\nThe current Academic Year is", AcadYear, Semester)
+	ivleconfig.AcadYear = strings.Trim(AcadYear, " \n\t")
+	ivleconfig.Semester = strings.Trim(Semester, " \n\t")
 
 	// Get DownloadLocation
-	fmt.Println("Where would you like to download your IVLE folders to? Leave blank to download them into the current folder, otherwise provide a path like \"~/Downloads/NUS\"")
+	fmt.Println("\nWhere would you like to download your IVLE folders to? Leave blank to download them into the current folder, otherwise provide a path like ~/Downloads/NUS (~ represents your home directory, if you know where that is). You can always edit this later.")
 	fmt.Print("ivled Download Location: ")
 	DownloadLocation, _ := reader.ReadString('\n')
-	if DownloadLocation == "\n" {
+	DownloadLocation = strings.Trim(DownloadLocation, " \n\t")
+	if DownloadLocation == "" {
 		currdir, err := os.Getwd()
 		if err != nil {
 			log.Fatal(err)
 		}
 		DownloadLocation = currdir
 	}
-	DownloadLocation = strings.Replace(DownloadLocation, "~", "$HOME", 1)
+	switch runtime.GOOS {
+	case "linux":
+		DownloadLocation = strings.Replace(DownloadLocation, "~", "$HOME", 1)
+	case "darwin":
+		DownloadLocation = strings.Replace(DownloadLocation, "~", "$HOME", 1)
+	case "windows":
+		DownloadLocation = strings.Replace(DownloadLocation, "~", "%userprofile%", 1)
+	default:
+		log.Fatalln("unsupported platform")
+	}
 	DownloadLocation = os.ExpandEnv(DownloadLocation)
+	DownloadLocation = strings.TrimSuffix(DownloadLocation, "/")
+	DownloadLocation = strings.TrimSuffix(DownloadLocation, "\\")
 	fmt.Println(DownloadLocation)
-	ivleconfig.DownloadLocation = strings.Trim(DownloadLocation, " \n")
+	ivleconfig.DownloadLocation = DownloadLocation
 
 	// Get ModulesThisSem
 	fmt.Println("=====================================")
@@ -305,9 +326,16 @@ func SetupConfig() IVLEConfig {
 	})
 	ivleconfig.ModulesThisSem = moduleinfos
 
+	// Set Up the initial ExcludedFileTypes and ExcludedFilePaths
+	ivleconfig.ExcludedFileTypes = excludedfiletypes
+	excludedfilepaths[DownloadLocation+"/Folder1"] = true
+	excludedfilepaths[DownloadLocation+"/Folder2"] = true
+	ivleconfig.ExcludedFilePaths = excludedfilepaths
+
 	// Write Data config file for writing to
-	CreateDirIfNotExist(os.ExpandEnv("$HOME/.config"))
-	configfile, _ := os.OpenFile(os.ExpandEnv("$HOME/.config/ivled.json"), os.O_WRONLY|os.O_CREATE, 0666)
+	cfg_filename := ConfigFolder() + "config.json"
+	CreateDirIfNotExist(ConfigFolder())
+	configfile, _ := os.OpenFile(cfg_filename, os.O_WRONLY|os.O_CREATE, 0666)
 	json, _ := JSONMarshalIndent(ivleconfig, true)
 	configfile.Truncate(0)
 	configfile.Seek(0, 0)
@@ -322,7 +350,7 @@ func SetupConfig() IVLEConfig {
 //===============================//
 
 func DownloadFileIfNotExist(filepath string, fileid string, filetype string) error {
-	if filetype_exclusionlist[strings.ToLower(filetype)] {
+	if ivleconfig.ExcludedFileTypes[strings.ToLower(filetype)] {
 		return nil
 	}
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
@@ -397,6 +425,24 @@ func MapModuleInfo(ss []ModuleInfo, fn func(ModuleInfo) ModuleInfo) (ret []Modul
 	return
 }
 
+func ConfigFolder() (configfolder string) {
+	var err error
+	switch runtime.GOOS {
+	case "windows":
+		configfolder = os.ExpandEnv("%APPDATA%\\ivled\\")
+	case "linux":
+		configfolder = os.ExpandEnv("$HOME/.config/ivled/")
+	case "darwin":
+		configfolder = os.ExpandEnv("$HOME/.config/ivled/")
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
+	return configfolder
+}
+
 func openbrowser(url string) {
 	var err error
 	switch runtime.GOOS {
@@ -406,6 +452,23 @@ func openbrowser(url string) {
 		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
 	case "darwin":
 		err = exec.Command("open", url).Start()
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func openfile(filepath string) {
+	var err error
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("xdg-open", filepath).Start()
+	case "windows":
+		err = exec.Command("notepad", filepath).Start()
+	case "darwin":
+		err = exec.Command("open", filepath).Start()
 	default:
 		err = fmt.Errorf("unsupported platform")
 	}
