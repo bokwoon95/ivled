@@ -99,6 +99,7 @@ func main() {
 		case "reset":
 			deletefile(ConfigFolder() + "config.json")
 			fmt.Println(ConfigFolder() + "config.json", "deleted")
+			os.Exit(0)
 		case "help":
 			fmt.Println("I am here to help!")
 			os.Exit(0)
