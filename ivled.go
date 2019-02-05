@@ -205,24 +205,24 @@ func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
 	if hf.Title != "" { // Means this is a Workbin
 		disdir := filedir + fpdlm + modulecode
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") && !ivleconfig.ExcludedFilePaths[disdir] {
-			fmt.Println("Folder      :", disdir)
+			fmt.Println("Folder      :", disdir + "/")
 			CreateDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
 				IVLEWalk(modulecode, disdir, hf1)
 			}
 		} else {
-			fmt.Println("Ignored     :", disdir)
+			fmt.Println("Ignored     :", disdir + "/")
 		}
 	} else if hf.FolderName != "" { // Means this is a Folder
 		disdir := filedir + fpdlm + hf.FolderName
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") && !ivleconfig.ExcludedFilePaths[disdir] {
-			fmt.Println("Folder      :", disdir)
+			fmt.Println("Folder      :", disdir + "/")
 			CreateDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
 				IVLEWalk(modulecode, disdir, hf1)
 			}
 		} else {
-			fmt.Println("Ignored     :", disdir)
+			fmt.Println("Ignored     :", disdir + "/")
 		}
 		for _, hf1 := range hf.Files {
 			IVLEWalk(modulecode, disdir, hf1)
