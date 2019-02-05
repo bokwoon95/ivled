@@ -82,22 +82,32 @@ type HomoFolder struct {
 var ivleconfig IVLEConfig
 var downloadedfiles []string
 var fpdlm string
+var configfolder string
 
 func main() {
+	switch runtime.GOOS {
+	case "windows":
+		configfolder = os.ExpandEnv("%APPDATA%\\ivled\\")
+	case "linux":
+		configfolder = os.ExpandEnv("$HOME/.config/ivled/")
+	case "darwin":
+		configfolder = os.ExpandEnv("$HOME/.config/ivled/")
+	default:
+		log.Fatalln("unsupported platform")
+	}
 	// Parse the CLI arguments
-	argslist := os.Args
-	if len(argslist) >= 2 {
-		cmd := argslist[1]
+	if len(os.Args) >= 2 {
+		cmd := os.Args[1]
 		switch cmd {
 		case "config":
-			configfile := ConfigFolder() + "config.json"
+			configfile := configfolder + "config.json"
 			if _, err := os.Stat(configfile); err == nil {
-				openfile(ConfigFolder() + "config.json")
+				openfile(configfolder + "config.json")
 				os.Exit(0)
 			}
 		case "reset":
-			deletefile(ConfigFolder() + "config.json")
-			fmt.Println(ConfigFolder() + "config.json", "has been deleted")
+			deletefile(configfolder + "config.json")
+			fmt.Println(configfolder + "config.json", "has been deleted")
 			os.Exit(0)
 		case "help":
 			fmt.Println("I am here to help!")
@@ -123,7 +133,7 @@ func main() {
 	// Read in the user config into struct ivleconfig
 	// If it doesn't exist we'll have to set it up the first time
 	doSetupConfig := true
-	cfg_filename := ConfigFolder() + "config.json"
+	cfg_filename := configfolder + "config.json"
 	if _, err := os.Stat(cfg_filename); err == nil {
 		jsonbytes, err := ioutil.ReadFile(cfg_filename)
 		if err != nil {
@@ -359,8 +369,8 @@ func SetupConfig() IVLEConfig {
 	ivleconfig.ExcludedFilePaths = excludedfilepaths
 
 	// Write ivleconfig struct into config file
-	cfg_filename := ConfigFolder() + "config.json"
-	CreateDirIfNotExist(ConfigFolder())
+	cfg_filename := configfolder + "config.json"
+	CreateDirIfNotExist(configfolder)
 	configfile, _ := os.OpenFile(cfg_filename, os.O_WRONLY|os.O_CREATE, 0666)
 	json, _ := JSONMarshalIndent(ivleconfig, true)
 	configfile.Truncate(0)
@@ -447,24 +457,6 @@ func MapModuleInfo(ss []ModuleInfo, fn func(ModuleInfo) ModuleInfo) (ret []Modul
 		ret = append(ret, fn(s))
 	}
 	return
-}
-
-func ConfigFolder() (configfolder string) {
-	var err error
-	switch runtime.GOOS {
-	case "windows":
-		configfolder = os.ExpandEnv("%APPDATA%\\ivled\\")
-	case "linux":
-		configfolder = os.ExpandEnv("$HOME/.config/ivled/")
-	case "darwin":
-		configfolder = os.ExpandEnv("$HOME/.config/ivled/")
-	default:
-		err = fmt.Errorf("unsupported platform")
-	}
-	if err != nil {
-		log.Fatal(err)
-	}
-	return configfolder
 }
 
 func openbrowser(url string) {
