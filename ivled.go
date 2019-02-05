@@ -88,10 +88,13 @@ func main() {
 	switch runtime.GOOS {
 	case "windows":
 		configfolder = os.ExpandEnv("%APPDATA%\\ivled\\")
+		fpdlm = "\\"
 	case "linux":
 		configfolder = os.ExpandEnv("$HOME/.config/ivled/")
+		fpdlm = "/"
 	case "darwin":
 		configfolder = os.ExpandEnv("$HOME/.config/ivled/")
+		fpdlm = "/"
 	default:
 		log.Fatalln("unsupported platform")
 	}
@@ -116,18 +119,6 @@ func main() {
 			fmt.Println("Unknown command '" + cmd + "': ignoring")
 			os.Exit(0)
 		}
-	}
-
-	// Setup the fpdlm: filepath delimiters
-	switch runtime.GOOS {
-	case "linux":
-		fpdlm = "/"
-	case "windows":
-		fpdlm = "\\"
-	case "darwin":
-		fpdlm = "/"
-	default:
-		log.Fatalf("unsupported platform")
 	}
 
 	// Read in the user config into struct ivleconfig
