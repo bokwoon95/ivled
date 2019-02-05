@@ -78,13 +78,17 @@ type HomoFolder struct {
 	ID       string
 }
 
-// Globally accessible variables
+// Global Variables
+//-----------------
 var ivleconfig IVLEConfig
 var downloadedfiles []string
+// OS specific variables
 var fpdlm string
 var configfolder string
+var configfile string
 
 func main() {
+	// Setup the OS variables
 	switch runtime.GOOS {
 	case "windows":
 		configfolder = os.ExpandEnv("%APPDATA%\\ivled\\")
@@ -98,6 +102,8 @@ func main() {
 	default:
 		log.Fatalln("unsupported platform")
 	}
+	configfile = configfolder + "config.json"
+
 	// Parse the CLI arguments
 	if len(os.Args) >= 2 {
 		cmd := os.Args[1]
@@ -110,7 +116,7 @@ func main() {
 			}
 		case "reset":
 			deletefile(configfolder + "config.json")
-			fmt.Println(configfolder + "config.json", "has been deleted")
+			fmt.Println(configfolder+"config.json", "has been deleted")
 			os.Exit(0)
 		case "help":
 			fmt.Println("I am here to help!")
@@ -124,9 +130,8 @@ func main() {
 	// Read in the user config into struct ivleconfig
 	// If it doesn't exist we'll have to set it up the first time
 	doSetupConfig := true
-	cfg_filename := configfolder + "config.json"
-	if _, err := os.Stat(cfg_filename); err == nil {
-		jsonbytes, err := ioutil.ReadFile(cfg_filename)
+	if _, err := os.Stat(configfile); err == nil {
+		jsonbytes, err := ioutil.ReadFile(configfile)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -134,9 +139,6 @@ func main() {
 		if err != nil {
 			log.Fatalln(err)
 		}
-		// if l := len(ivleconfig.DownloadLocation); l > 0 && ivleconfig.DownloadLocation[l-1] == '/' {
-		// 	ivleconfig.DownloadLocation = ivleconfig.DownloadLocation[:l-1]
-		// }
 		ivleconfig.DownloadLocation = strings.TrimSuffix(ivleconfig.DownloadLocation, fpdlm)
 		if len(ivleconfig.ModulesThisSem) >= 0 {
 			doSetupConfig = false
@@ -202,24 +204,24 @@ func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
 	if hf.Title != "" { // Means this is a Workbin
 		disdir := filedir + fpdlm + modulecode
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") && !ivleconfig.ExcludedFilePaths[disdir] {
-			fmt.Println("Folder      :", disdir + "/")
+			fmt.Println("Folder      :", disdir+"/")
 			CreateDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
 				IVLEWalk(modulecode, disdir, hf1)
 			}
 		} else {
-			fmt.Println("Ignored     :", disdir + "/")
+			fmt.Println("Ignored     :", disdir+"/")
 		}
 	} else if hf.FolderName != "" { // Means this is a Folder
 		disdir := filedir + fpdlm + hf.FolderName
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") && !ivleconfig.ExcludedFilePaths[disdir] {
-			fmt.Println("Folder      :", disdir + "/")
+			fmt.Println("Folder      :", disdir+"/")
 			CreateDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
 				IVLEWalk(modulecode, disdir, hf1)
 			}
 		} else {
-			fmt.Println("Ignored     :", disdir + "/")
+			fmt.Println("Ignored     :", disdir+"/")
 		}
 		for _, hf1 := range hf.Files {
 			IVLEWalk(modulecode, disdir, hf1)
@@ -356,14 +358,13 @@ func SetupConfig() IVLEConfig {
 	ivleconfig.ExcludedFilePaths = excludedfilepaths
 
 	// Write ivleconfig struct into config file
-	cfg_filename := configfolder + "config.json"
 	CreateDirIfNotExist(configfolder)
-	configfile, _ := os.OpenFile(cfg_filename, os.O_WRONLY|os.O_CREATE, 0666)
+	fh, _ := os.OpenFile(configfile, os.O_WRONLY|os.O_CREATE, 0666)
 	json, _ := JSONMarshalIndent(ivleconfig, true)
-	configfile.Truncate(0)
-	configfile.Seek(0, 0)
-	configfile.Write(json)
-	defer configfile.Close()
+	fh.Truncate(0)
+	fh.Seek(0, 0)
+	fh.Write(json)
+	defer fh.Close()
 
 	return ivleconfig
 }
@@ -372,32 +373,32 @@ func SetupConfig() IVLEConfig {
 // HERE LIE THE HELPER FUNCTIONS //
 //===============================//
 
-func DownloadFileIfNotExist(filepath string, fileid string) error {
+func DownloadFileIfNotExist(filepath string, fileid string) {
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
 		// Get the data
 		fmt.Println("Downloading :", filepath)
-		// url := "https://ivle.nus.edu.sg/api/downloadfile.ashx?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&ID=" + fileid + "&target=workbin"
 		resp, err := http.Get("https://ivle.nus.edu.sg/api/downloadfile.ashx?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&ID=" + fileid + "&target=workbin")
 		if err != nil {
-			return err
+			fmt.Println("GET request for", filepath, "("+fileid+")", "failed with error:", err)
 		}
 		defer resp.Body.Close()
 
 		// Create the file
 		out, err := os.Create(filepath)
 		if err != nil {
-			return err
+			fmt.Println("os.Create(filepath) failed:", err)
 		}
 		defer out.Close()
 
-		// Write the body to file
+		// Write the data to file
 		_, err = io.Copy(out, resp.Body)
+		if err != nil {
+			fmt.Println("io.Copy(out, resp.Body) failed:", err)
+		}
 
 		// Append to list of downloaded files
 		downloadedfiles = append(downloadedfiles, filepath)
-		return err
 	}
-	return nil
 }
 
 func CreateDirIfNotExist(dir string) {
