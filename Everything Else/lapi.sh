@@ -21,7 +21,7 @@ lapi_modules_search() {
 }
 
 lapi_workbins() {
-  curl "https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=$1&TitleOnly=false&WorkbinID=$2" | jq .
+  curl "https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=$LAPIkey&AuthToken=$AuthToken&CourseID=$1" | jq .
 }
 
 lapi_downloadfile() {

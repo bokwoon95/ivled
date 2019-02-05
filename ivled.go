@@ -188,11 +188,7 @@ func IVLEGetRequest(url string) (ivleresponse IVLEResponse, err error) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	json.Unmarshal(body, &ivleresponse)
+	json.NewDecoder(resp.Body).Decode(&ivleresponse)
 	if ivleresponse.Comments == "Invalid login!" {
 		err = errors.New("Invalid login!")
 		log.Fatalln(err)
