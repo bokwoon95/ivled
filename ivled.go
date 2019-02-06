@@ -103,6 +103,7 @@ func main() {
 	default:
 		log.Fatalln("unsupported platform")
 	}
+	CreateDirIfNotExist(configfolder)
 	configfile = configfolder + "config.json"
 
 	// Parse the CLI arguments
@@ -138,23 +139,9 @@ func main() {
 	}
 
 	// Read in the user config into struct ivleconfig
-	// If it doesn't exist we'll have to set it up the first time
-	doSetupConfig := true
-	if _, err := os.Stat(configfile); err == nil {
-		jsonbytes, err := ioutil.ReadFile(configfile)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		err = json.Unmarshal(jsonbytes, &ivleconfig)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		ivleconfig.DownloadLocation = strings.TrimSuffix(ivleconfig.DownloadLocation, fpdlm)
-		if len(ivleconfig.ModulesThisSem) >= 0 {
-			doSetupConfig = false
-		}
-	}
-	if doSetupConfig {
+	var config_error error
+	ivleconfig, config_error = ReadConfig()
+	if config_error != nil {
 		ivleconfig = SetupConfig()
 	}
 	modules := ivleconfig.ModulesThisSem
@@ -246,21 +233,40 @@ func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
 	}
 }
 
+func ReadConfig() (ivleconfig IVLEConfig, err error) {
+	if _, err = os.Stat(configfile); err == nil {
+		jsonbytes, err := ioutil.ReadFile(configfile)
+		if err != nil {
+			return ivleconfig, err
+		}
+		err = json.Unmarshal(jsonbytes, &ivleconfig)
+		if err != nil {
+			return ivleconfig, err
+		}
+		ivleconfig.DownloadLocation = strings.TrimSuffix(ivleconfig.DownloadLocation, fpdlm)
+		if len(ivleconfig.ModulesThisSem) <= 0 {
+			return ivleconfig, errors.New("config.json may be corrupted, no modules found")
+		}
+	}
+	return ivleconfig, err
+}
+
 // Creates the user's config file
-func SetupConfig() IVLEConfig {
-	// create config struct
-	var ivleconfig IVLEConfig
+func SetupConfig() (ivleconfig IVLEConfig) {
+	reader := bufio.NewReader(os.Stdin)
 
 	// Get StudentID
-	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("What is your student ID? (e.g. e0031878): ")
 	StudentID, _ := reader.ReadString('\n')
 	StudentID = strings.Trim(StudentID, " \n\t")
-	fmt.Println(StudentID)
 	ivleconfig.StudentID = StudentID
 
 	// Get LAPIkey
-	fmt.Println("A browser should have opened the URL https://ivle.nus.edu.sg/LAPI/default.aspx (if not, open it manually). Copy your LAPI key, paste it back here then press Enter. (If that doesn't work just use my LAPI key wRDGB8jT2IbKNRBrYnd6F)")
+	fmt.Println("\n↓↓↓↓↓     PLEASE VISIT THE URL      ↓↓↓↓↓")
+	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	fmt.Println("https://ivle.nus.edu.sg/LAPI/default.aspx")
+	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	fmt.Println("Copy your LAPI key and paste it here. (If it fails use mine wRDGB8jT2IbKNRBrYnd6F)")
 	openbrowser("https://ivle.nus.edu.sg/LAPI/default.aspx")
 	fmt.Print("LAPI key: ")
 	LAPIkey, _ := reader.ReadString('\n')
@@ -268,12 +274,15 @@ func SetupConfig() IVLEConfig {
 	ivleconfig.LAPIkey = LAPIkey
 
 	// Get AuthToken
-	fmt.Println("\nPlease visit the URL https://ivle.nus.edu.sg/api/login/?apikey=" + LAPIkey + ". Enter your IVLE credentials, copy the long authorization token (Ctrl+A/Cmd+A), paste it back here then press Enter")
+	fmt.Println("\n↓↓↓↓↓↓↓↓↓↓           PLEASE VISIT THE URL            ↓↓↓↓↓↓↓↓↓↓")
+	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	fmt.Println("https://ivle.nus.edu.sg/api/login/?apikey=" + LAPIkey)
+	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	fmt.Println("Log in with your IVLE credentials, select all and paste the very long login token here")
 	// openbrowser(authtoken_url) // IVLE disabled it or something, that's why all IVLEDownloaders have stopped 'working'. Not to worry we can tell the user to manually visit the URL.
 	fmt.Print("Authorization Token: ")
 	AuthToken, _ := reader.ReadString('\n')
 	AuthToken = strings.Trim(AuthToken, " \n\t")
-	fmt.Println(AuthToken)
 	ivleconfig.AuthToken = AuthToken
 
 	//TODO obtain authtoken expiry with https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey={System.String}&Token={System.String}
@@ -290,10 +299,10 @@ func SetupConfig() IVLEConfig {
 		sem1year = time.Now().AddDate(-1, 0, 0).Format("2006")
 		sem2year = time.Now().Format("2006")
 	} else {
-		log.Fatalf("Error 01: Wtf? Your month falls outside 1-12")
+		log.Fatalf("Wtf? Your month falls outside 1-12")
 	}
 	AcadYear := sem1year + "/" + sem2year
-	fmt.Println("\nThe current Academic Year is", AcadYear, Semester)
+	fmt.Println("\nThe current Academic Year is:", AcadYear, Semester)
 	ivleconfig.AcadYear = strings.Trim(AcadYear, " \n\t")
 	ivleconfig.Semester = strings.Trim(Semester, " \n\t")
 
@@ -302,8 +311,12 @@ func SetupConfig() IVLEConfig {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("\nWhere would you like to download your IVLE folders to? e.g. ~/Downloads/NUS, ~ representing your home directory. You can always edit this later.")
-	fmt.Println("Leave blank to download files into the current folder (" + currdir + ")")
+	fmt.Println("\nWHERE WOULD YOU LIKE TO DOWNLOAD YOUR IVLE FOLDERS TO?")
+	fmt.Println("e.g. ~/Downloads/NUS. You can edit this later")
+	fmt.Println("↓↓↓   Leave blank to download files into the current folder   ↓↓↓")
+	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	fmt.Println(currdir)
+	fmt.Println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 	fmt.Print("ivled Download Location: ")
 	DownloadLocation, _ := reader.ReadString('\n')
 	DownloadLocation = strings.Trim(DownloadLocation, " \n\t")
@@ -323,7 +336,7 @@ func SetupConfig() IVLEConfig {
 	DownloadLocation = os.ExpandEnv(DownloadLocation)
 	DownloadLocation = strings.TrimSuffix(DownloadLocation, "/")
 	DownloadLocation = strings.TrimSuffix(DownloadLocation, "\\")
-	fmt.Println("You have chosen to download files into:", DownloadLocation)
+	fmt.Println("You have chosen to download files into:", DownloadLocation + "\n")
 	ivleconfig.DownloadLocation = DownloadLocation
 
 	// Get ModulesThisSem
@@ -332,8 +345,6 @@ func SetupConfig() IVLEConfig {
 	fmt.Println("      (This may take some time)      ")
 	fmt.Println("=====================================")
 	ivleresponse, _ := IVLEGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&StudentID=" + ivleconfig.StudentID)
-	tprint(ivleresponse.Results)
-	cprint(string(ivleresponse.Results))
 	var moduleinfos []ModuleInfo
 	json.Unmarshal(ivleresponse.Results, &moduleinfos)
 	cprint(moduleinfos)
@@ -370,7 +381,6 @@ func SetupConfig() IVLEConfig {
 	ivleconfig.ExcludedFilePaths = excludedfilepaths
 
 	// Write ivleconfig struct into config file
-	CreateDirIfNotExist(configfolder)
 	fh, _ := os.OpenFile(configfile, os.O_WRONLY|os.O_CREATE, 0666)
 	json, _ := JSONMarshalIndent(ivleconfig, true)
 	fh.Truncate(0)
