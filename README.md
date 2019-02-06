@@ -1,11 +1,10 @@
 # ivled
 [![asciicast](https://asciinema.org/a/EwQph5N9EHTifKmH4CpdSQYdj.png)](https://asciinema.org/a/EwQph5N9EHTifKmH4CpdSQYdj)
-IVLE downloader lite. Simple command line wrapper over IVLE LAPI. There is no package setup (looking at you python), everything is in one binary file. There is no diving into source code to set some environment variables, ivled reads from its own config.json which it will set up together with you. It's fast and it's lightweight, and it might sometimes give you segmentation faults✌️.
+IVLE downloader lite. Simple command line wrapper over IVLE LAPI. There is no package installation needed, everything is in one binary file. There is no diving into source code to set some hardcoded API keys/Auth tokens, ivled sets up its own config file together with you. It's fast and it's lightweight✌️.
 
 Tested on macOS Mojave, <s>Windows support coming</s> Windows support delayed because of some weird issues and I really don't feel like developing on Windows right now.
 
-By default, [mp4 mp3 mov avi] files are excluded, but you can also add and remove filetypes from your config file. Just run `ivled config` to begin.  
-You can also add folders and files you want to ignore to your config file. Right now there's no explicit documentation on how to do that, but if you know JSON you can figure it out. If you don't know JSON just hang tight.
+You can exclude folders by name, and files by filetype or name. Just run `ivled config` to open your config file. The config file is hopefully self explanatory enough, otherwise just [drop me an issue](https://github.com/bokwoon95/ivled/issues). By default, [mp4 mp3 mov avi] files are excluded.
 
 # How to use
 `ivled`        : Downloads your latest IVLE files into a directory based on your config file.
@@ -19,7 +18,7 @@ You can also add folders and files you want to ignore to your config file. Right
 `ivled help`   : Displays this help
 
 # macOS Installation
-1. Use Chrome (not Safari) to download ['ivled' file](https://github.com/bokwoon95/ivled/blob/master/ivled). Make sure it downloads into your 'Downloads' folder.
+1. Use Chrome (not Safari) to download the [ivled file](https://github.com/bokwoon95/ivled/blob/master/ivled). Make sure it downloads into your 'Downloads' folder.
 2. Open Terminal. Run this command
 ```
 mv ~/Downloads/ivled /usr/local/bin
