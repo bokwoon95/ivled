@@ -122,7 +122,8 @@ func main() {
 			fmt.Println(configfile, "has been deleted")
 			os.Exit(0)
 		case "help":
-			fmt.Println("Available Commands:")
+			fmt.Println("Available Commands")
+			fmt.Println("------------------")
 			fmt.Println("ivled        : Downloads your latest IVLE files into a directory based on your config file")
 			fmt.Println("               If your config file is absent, it will run you through the configuration process")
 			fmt.Println("ivled config : Opens your config file with an external text editor")
