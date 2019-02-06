@@ -82,6 +82,7 @@ type HomoFolder struct {
 //-----------------
 var ivleconfig IVLEConfig
 var downloadedfiles []string
+
 // OS specific variables
 var fpdlm string
 var configfolder string
@@ -109,17 +110,25 @@ func main() {
 		cmd := os.Args[1]
 		switch cmd {
 		case "config":
-			configfile := configfolder + "config.json"
-			if _, err := os.Stat(configfile); err == nil {
-				openfile(configfolder + "config.json")
-				os.Exit(0)
+			if _, err := os.Stat(configfile); os.IsNotExist(err) {
+				SetupConfig()
 			}
+			openfile(configfile)
+			fmt.Println("Opened your config file", configfile)
+			fmt.Println("If your operating system cannot figure out what to open json files with, please manually open it with a text editor.")
+			os.Exit(0)
 		case "reset":
-			deletefile(configfolder + "config.json")
-			fmt.Println(configfolder+"config.json", "has been deleted")
+			deletefile(configfile)
+			fmt.Println(configfile, "has been deleted")
 			os.Exit(0)
 		case "help":
-			fmt.Println("I am here to help!")
+			fmt.Println("Available Commands:")
+			fmt.Println("ivled        : Downloads your latest IVLE files into a directory based on your config file")
+			fmt.Println("               If your config file is absent, it will run you through the configuration process")
+			fmt.Println("ivled config : Opens your config file with an external text editor")
+			fmt.Println("               If your config file is absent, it will run you through the configuration process")
+			fmt.Println("ivled reset  : Deletes your config file")
+			fmt.Println("ivled help   : Displays this help")
 			os.Exit(0)
 		default:
 			fmt.Println("Unknown command '" + cmd + "': ignoring")
@@ -149,7 +158,7 @@ func main() {
 	}
 	modules := ivleconfig.ModulesThisSem
 
-	// This is the block that actually downloads all the files. It loops
+	// This is the for loop that actually downloads all the files. It loops
 	// through every module's workbin and calls the recursive IVLEWalk() on it
 	for _, module := range modules {
 
@@ -236,7 +245,7 @@ func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
 	}
 }
 
-// If config file is missing (e.g. the user is running ivled for the first time), this function will create it
+// Creates the user's config file
 func SetupConfig() IVLEConfig {
 	// create config struct
 	var ivleconfig IVLEConfig
@@ -292,7 +301,8 @@ func SetupConfig() IVLEConfig {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("\nWhere would you like to download your IVLE folders to? Leave blank to download them into the current folder (" + currdir + "), otherwise provide a path like ~/Downloads/NUS (~ representing your home directory). You can always edit this later.")
+	fmt.Println("\nWhere would you like to download your IVLE folders to? e.g. ~/Downloads/NUS, ~ representing your home directory. You can always edit this later.")
+	fmt.Println("Leave blank to download files into the current folder (" + currdir + ")")
 	fmt.Print("ivled Download Location: ")
 	DownloadLocation, _ := reader.ReadString('\n')
 	DownloadLocation = strings.Trim(DownloadLocation, " \n\t")
@@ -312,12 +322,13 @@ func SetupConfig() IVLEConfig {
 	DownloadLocation = os.ExpandEnv(DownloadLocation)
 	DownloadLocation = strings.TrimSuffix(DownloadLocation, "/")
 	DownloadLocation = strings.TrimSuffix(DownloadLocation, "\\")
-	fmt.Println(DownloadLocation)
+	fmt.Println("You have chosen to download files into:", DownloadLocation)
 	ivleconfig.DownloadLocation = DownloadLocation
 
 	// Get ModulesThisSem
 	fmt.Println("=====================================")
 	fmt.Println("GETting your modules this semester..")
+	fmt.Println("      (This may take some time)      ")
 	fmt.Println("=====================================")
 	ivleresponse, _ := IVLEGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&StudentID=" + ivleconfig.StudentID)
 	tprint(ivleresponse.Results)
