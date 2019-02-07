@@ -145,6 +145,7 @@ func main() {
 		ivleconfig = SetupConfig()
 	}
 	modules := ivleconfig.ModulesThisSem
+	CreateDirIfNotExist(os.ExpandEnv(ivleconfig.DownloadLocation))
 
 	// This is the for loop that actually downloads all the files. It loops
 	// through every module's workbin and calls the recursive IVLEWalk() on it
@@ -161,7 +162,6 @@ func main() {
 		json.Unmarshal(ivleresponse.Results, &homofolders)
 
 		// Recursively iterate over workbin directory structure
-		CreateDirIfNotExist(os.ExpandEnv(ivleconfig.DownloadLocation))
 		for _, hf := range homofolders {
 			IVLEWalk(module.ModuleCode, os.ExpandEnv(ivleconfig.DownloadLocation), hf)
 		}
@@ -179,6 +179,7 @@ func main() {
 		fmt.Print(i + 1)
 		fmt.Println(".", s)
 	}
+	fmt.Println("(" + time.Now().Format("15:04 Mon 2 Jan 2006)\n"))
 }
 
 // Main function to interact with the IVLE API
@@ -336,7 +337,7 @@ func SetupConfig() (ivleconfig IVLEConfig) {
 	DownloadLocation = os.ExpandEnv(DownloadLocation)
 	DownloadLocation = strings.TrimSuffix(DownloadLocation, "/")
 	DownloadLocation = strings.TrimSuffix(DownloadLocation, "\\")
-	fmt.Println("You have chosen to download files into:", DownloadLocation + "\n")
+	fmt.Println("You have chosen to download files into:", DownloadLocation+"\n")
 	ivleconfig.DownloadLocation = DownloadLocation
 
 	// Get ModulesThisSem
