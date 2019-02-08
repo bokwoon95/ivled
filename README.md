@@ -24,6 +24,6 @@ You can exclude folders by name, and files by filetype or name. Just run `ivled 
 mv ~/Downloads/ivled /usr/local/bin
 chmod a+x /usr/local/bin/ivled
 ```
-3. Run `ivled` to begin.
+3. Run `ivled` to begin. Follow the setup instructions closely (will be providing screenshots eventually).
 
 If you want to inspect or edit your config anytime, just run the command `ivled config`. <sub>(JSON is not a friendly format to edit config files in, I plan to eventually move over to TOML.)</sub>
