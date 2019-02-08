@@ -18,7 +18,7 @@ You can exclude folders by name, and files by filetype or name. Just run `ivled 
 `ivled help`   : Displays this help
 
 # macOS Installation
-1. Use Chrome (not Safari) to download the [ivled file](https://github.com/bokwoon95/ivled/blob/master/ivled). Make sure it downloads into your 'Downloads' folder.
+1. Use Chrome or Firefox (as long as it's not [not Safari](https://forums.macrumors.com/threads/safari-erroneously-adding-dms-extension-to-downloads.2080108/)) to download the [ivled file](https://github.com/bokwoon95/ivled/blob/master/ivled). Make sure it downloads into your 'Downloads' folder.
 2. Open Terminal. Run this command
 ```
 mv ~/Downloads/ivled /usr/local/bin
