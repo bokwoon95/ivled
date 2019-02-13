@@ -19,7 +19,7 @@ import (
 )
 
 // Used to store the user config
-type IVLEConfig struct {
+type ivleConfig struct {
 	LAPIkey           string
 	AuthToken         string
 	AuthTokenExpiry   string
@@ -29,11 +29,11 @@ type IVLEConfig struct {
 	DownloadLocation  string
 	ExcludedFileTypes map[string]bool
 	ExcludedFilePaths map[string]bool
-	ModulesThisSem    []ModuleInfo
+	ModulesThisSem    []moduleInfo
 }
 
 // All IVLE API responses look like this
-type IVLEResponse struct {
+type ivleResponse struct {
 	Results  json.RawMessage
 	Comments string
 }
@@ -41,7 +41,7 @@ type IVLEResponse struct {
 // Stores all the info on a module. The important thing to note is that the ID
 // field must be queried for in a separate API call, because the IVLE API
 // doesn't include it when you ask for all the modules that a user is taking.
-type ModuleInfo struct {
+type moduleInfo struct {
 	ModuleCode      string
 	ModuleTitle     string
 	AcadYear        string
@@ -49,9 +49,9 @@ type ModuleInfo struct {
 	ID              string
 }
 
-// Semantically identical to ModuleInfo (field-for-field), but we need this
+// Semantically identical to moduleInfo (field-for-field), but we need this
 // because the field names are different
-type CourseInfo struct {
+type courseInfo struct {
 	CourseCode     string
 	CourseName     string
 	CourseAcadYear string
@@ -65,12 +65,12 @@ type CourseInfo struct {
 // into non-homogenous structs. It must be a homogenous struct. Thus I have
 // combined all the json properties of files, folders and workbins into one
 // giant struct. It's a hack, but it works
-type HomoFolder struct {
+type homoFolder struct {
 	Title string
 
 	FolderName string
-	Folders    []HomoFolder
-	Files      []HomoFolder
+	Folders    []homoFolder
+	Files      []homoFolder
 
 	FileName string
 	FileType string
@@ -78,9 +78,14 @@ type HomoFolder struct {
 	ID       string
 }
 
+type param struct {
+	Key   string
+	Value string
+}
+
 // Global Variables
 //-----------------
-var ivleconfig IVLEConfig
+var ivleconfig ivleConfig
 var downloadedfiles []string
 
 // OS specific variables
@@ -103,7 +108,7 @@ func main() {
 	default:
 		log.Fatalln("unsupported platform")
 	}
-	CreateDirIfNotExist(configfolder)
+	createDirIfNotExist(configfolder)
 	configfile = configfolder + "config.json"
 
 	// Parse the CLI arguments
@@ -112,7 +117,7 @@ func main() {
 		switch cmd {
 		case "config":
 			if _, err := os.Stat(configfile); os.IsNotExist(err) {
-				SetupConfig()
+				setupConfig()
 			}
 			openfile(configfile)
 			fmt.Println("Opened your config file", configfile)
@@ -139,31 +144,32 @@ func main() {
 	}
 
 	// Read in the user config into struct ivleconfig
-	var config_error error
-	ivleconfig, config_error = ReadConfig()
-	if config_error != nil {
-		ivleconfig = SetupConfig()
+	var configError error
+	ivleconfig, configError = readConfig()
+	if configError != nil {
+		ivleconfig = setupConfig()
 	}
 	modules := ivleconfig.ModulesThisSem
-	CreateDirIfNotExist(os.ExpandEnv(ivleconfig.DownloadLocation))
+	createDirIfNotExist(os.ExpandEnv(ivleconfig.DownloadLocation))
 
 	// This is the for loop that actually downloads all the files. It loops
-	// through every module's workbin and calls the recursive IVLEWalk() on it
+	// through every module's workbin and calls the recursive ivleWalk() on it
 	for _, module := range modules {
 
 		// Download module's workbin directory structure
 		fmt.Println("==================================")
 		fmt.Println("Downloading", module.ModuleCode, "Workbin")
 		fmt.Println("==================================")
-		ivleresponse, _ := IVLEGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&CourseID=" + module.ID)
+		ivleresponse, _ := ivleGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&CourseID=" + module.ID)
+		// ivleresponse, _ := ivleGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Workbins?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&CourseID=" + module.ID, []param{})
 
 		// Parse workbin directory structure
-		var homofolders []HomoFolder
+		var homofolders []homoFolder
 		json.Unmarshal(ivleresponse.Results, &homofolders)
 
 		// Recursively iterate over workbin directory structure
 		for _, hf := range homofolders {
-			IVLEWalk(module.ModuleCode, os.ExpandEnv(ivleconfig.DownloadLocation), hf)
+			ivleWalk(module.ModuleCode, os.ExpandEnv(ivleconfig.DownloadLocation), hf)
 		}
 	}
 	fmt.Println("==================================")
@@ -183,29 +189,40 @@ func main() {
 }
 
 // Main function to interact with the IVLE API
-func IVLEGetRequest(url string) (ivleresponse IVLEResponse, err error) {
+func ivleGetRequest(url string) (ivleresponse ivleResponse, err error) {
+// func ivleGetRequest(url string, params []param) (ivleresponse ivleResponse, err error) {
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	json.NewDecoder(resp.Body).Decode(&ivleresponse)
 	if ivleresponse.Comments == "Invalid login!" {
-		err = errors.New("Invalid login!")
+		err = errors.New("invalid login")
 		log.Fatalln(err)
 	}
+
+	// req, _ := http.NewRequest("GET", url, nil)
+	// q := req.URL.Query()
+	// for _, p := range params {
+	// 	q.Add(p.Key, p.Value)
+	// }
+	// req.URL.RawQuery = q.Encode()
+	// fmt.Println("The GET querystring is", req.URL.String())
+	// os.Exit(0)
+    //
 	return ivleresponse, err
 }
 
-// Recursive, Depth First Search function that walks through the HomoFolder and
+// Recursive, Depth First Search function that walks through the homoFolder and
 // downloads files that are not present in the computer
-func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
+func ivleWalk(modulecode string, filedir string, hf homoFolder) {
 	if hf.Title != "" { // Means this is a Workbin
 		disdir := filedir + fpdlm + modulecode
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") && !ivleconfig.ExcludedFilePaths[disdir] {
 			fmt.Println("Folder      :", disdir+"/")
-			CreateDirIfNotExist(disdir)
+			createDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
-				IVLEWalk(modulecode, disdir, hf1)
+				ivleWalk(modulecode, disdir, hf1)
 			}
 		} else {
 			fmt.Println("Ignored     :", disdir+"/")
@@ -214,27 +231,27 @@ func IVLEWalk(modulecode string, filedir string, hf HomoFolder) {
 		disdir := filedir + fpdlm + hf.FolderName
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") && !ivleconfig.ExcludedFilePaths[disdir] {
 			fmt.Println("Folder      :", disdir+"/")
-			CreateDirIfNotExist(disdir)
+			createDirIfNotExist(disdir)
 			for _, hf1 := range hf.Folders {
-				IVLEWalk(modulecode, disdir, hf1)
+				ivleWalk(modulecode, disdir, hf1)
 			}
 		} else {
 			fmt.Println("Ignored     :", disdir+"/")
 		}
 		for _, hf1 := range hf.Files {
-			IVLEWalk(modulecode, disdir, hf1)
+			ivleWalk(modulecode, disdir, hf1)
 		}
 	} else if hf.FileName != "" { // Means this is a File
 		disfile := filedir + fpdlm + hf.FileName
 		if !ivleconfig.ExcludedFileTypes[strings.ToLower(hf.FileType)] && !ivleconfig.ExcludedFilePaths[disfile] {
-			DownloadFileIfNotExist(disfile, hf.ID)
+			downloadFileIfNotExist(disfile, hf.ID)
 		} else {
 			fmt.Println("Ignored     :", disfile)
 		}
 	}
 }
 
-func ReadConfig() (ivleconfig IVLEConfig, err error) {
+func readConfig() (ivleconfig ivleConfig, err error) {
 	if _, err = os.Stat(configfile); err == nil {
 		jsonbytes, err := ioutil.ReadFile(configfile)
 		if err != nil {
@@ -253,7 +270,7 @@ func ReadConfig() (ivleconfig IVLEConfig, err error) {
 }
 
 // Creates the user's config file
-func SetupConfig() (ivleconfig IVLEConfig) {
+func setupConfig() (ivleconfig ivleConfig) {
 	reader := bufio.NewReader(os.Stdin)
 
 	// Get StudentID
@@ -345,19 +362,21 @@ func SetupConfig() (ivleconfig IVLEConfig) {
 	fmt.Println("GETting your modules this semester..")
 	fmt.Println("      (This may take some time)      ")
 	fmt.Println("=====================================")
-	ivleresponse, _ := IVLEGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&StudentID=" + ivleconfig.StudentID)
-	var moduleinfos []ModuleInfo
+	ivleresponse, _ := ivleGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey="+ivleconfig.LAPIkey+"&AuthToken="+ivleconfig.AuthToken+"&StudentID="+ivleconfig.StudentID)
+	// ivleresponse, _ := ivleGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Taken?APIKey="+ivleconfig.LAPIkey+"&AuthToken="+ivleconfig.AuthToken+"&StudentID="+ivleconfig.StudentID, []param{})
+	var moduleinfos []moduleInfo
 	json.Unmarshal(ivleresponse.Results, &moduleinfos)
 	cprint(moduleinfos)
-	moduleinfos = FilterModuleInfo(moduleinfos, func(mi ModuleInfo) bool {
+	moduleinfos = filterModuleInfo(moduleinfos, func(mi moduleInfo) bool {
 		return mi.AcadYear == ivleconfig.AcadYear && mi.SemesterDisplay == ivleconfig.Semester
 	})
-	moduleinfos = MapModuleInfo(moduleinfos, func(mi ModuleInfo) ModuleInfo {
+	moduleinfos = mapModuleInfo(moduleinfos, func(mi moduleInfo) moduleInfo {
 		fmt.Println("GETting module info for :", mi.ModuleCode)
-		ivleresponse, _ := IVLEGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&IncludeAllInfo=false&ModuleCode=" + mi.ModuleCode)
-		var courseinfos []CourseInfo
+		ivleresponse, _ := ivleGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&IncludeAllInfo=false&ModuleCode=" + mi.ModuleCode)
+		// ivleresponse, _ := ivleGetRequest("https://ivle.nus.edu.sg/api/Lapi.svc/Modules_Search?APIKey=" + ivleconfig.LAPIkey + "&AuthToken=" + ivleconfig.AuthToken + "&IncludeAllInfo=false&ModuleCode=" + mi.ModuleCode, []param{})
+		var courseinfos []courseInfo
 		json.Unmarshal(ivleresponse.Results, &courseinfos)
-		courseinfos = FilterCourseInfo(courseinfos, func(ci CourseInfo) bool {
+		courseinfos = filterCourseInfo(courseinfos, func(ci courseInfo) bool {
 			return ci.CourseAcadYear == mi.AcadYear && ci.CourseSemester == mi.SemesterDisplay
 		})
 		if len(courseinfos) <= 0 {
@@ -383,7 +402,7 @@ func SetupConfig() (ivleconfig IVLEConfig) {
 
 	// Write ivleconfig struct into config file
 	fh, _ := os.OpenFile(configfile, os.O_WRONLY|os.O_CREATE, 0666)
-	json, _ := JSONMarshalIndent(ivleconfig, true)
+	json, _ := jsonMarshalIndent(ivleconfig, true)
 	fh.Truncate(0)
 	fh.Seek(0, 0)
 	fh.Write(json)
@@ -396,7 +415,7 @@ func SetupConfig() (ivleconfig IVLEConfig) {
 // HERE LIE THE HELPER FUNCTIONS //
 //===============================//
 
-func DownloadFileIfNotExist(filepath string, fileid string) {
+func downloadFileIfNotExist(filepath string, fileid string) {
 	if _, err := os.Stat(filepath); os.IsNotExist(err) {
 		// Get the data
 		fmt.Println("Downloading :", filepath)
@@ -424,7 +443,7 @@ func DownloadFileIfNotExist(filepath string, fileid string) {
 	}
 }
 
-func CreateDirIfNotExist(dir string) {
+func createDirIfNotExist(dir string) {
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		err = os.MkdirAll(dir, 0755)
 		if err != nil {
@@ -434,7 +453,7 @@ func CreateDirIfNotExist(dir string) {
 }
 
 // Converts a struct to JSON byte array with proper indentation
-func JSONMarshalIndent(v interface{}, safeEncoding bool) ([]byte, error) {
+func jsonMarshalIndent(v interface{}, safeEncoding bool) ([]byte, error) {
 	b, err := json.MarshalIndent(v, "", "  ")
 
 	if safeEncoding {
@@ -445,7 +464,7 @@ func JSONMarshalIndent(v interface{}, safeEncoding bool) ([]byte, error) {
 	return b, err
 }
 
-func FilterModuleInfo(ss []ModuleInfo, test func(ModuleInfo) bool) (ret []ModuleInfo) {
+func filterModuleInfo(ss []moduleInfo, test func(moduleInfo) bool) (ret []moduleInfo) {
 	for _, s := range ss {
 		if test(s) {
 			ret = append(ret, s)
@@ -454,7 +473,7 @@ func FilterModuleInfo(ss []ModuleInfo, test func(ModuleInfo) bool) (ret []Module
 	return
 }
 
-func FilterCourseInfo(ss []CourseInfo, test func(CourseInfo) bool) (ret []CourseInfo) {
+func filterCourseInfo(ss []courseInfo, test func(courseInfo) bool) (ret []courseInfo) {
 	for _, s := range ss {
 		if test(s) {
 			ret = append(ret, s)
@@ -463,7 +482,7 @@ func FilterCourseInfo(ss []CourseInfo, test func(CourseInfo) bool) (ret []Course
 	return
 }
 
-func MapModuleInfo(ss []ModuleInfo, fn func(ModuleInfo) ModuleInfo) (ret []ModuleInfo) {
+func mapModuleInfo(ss []moduleInfo, fn func(moduleInfo) moduleInfo) (ret []moduleInfo) {
 	for _, s := range ss {
 		ret = append(ret, fn(s))
 	}
