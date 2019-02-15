@@ -16,22 +16,22 @@ elif [[ "$#" -eq 1 ]]; then
       echo "ivled stopped"
     fi
   elif [[ "$1" == "autostart" ]]; then
-    sudo cat > /Library/LaunchAgents/com.ivledaemon.plist << EOT
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-    <plist version="1.0">
-    <dict>
-      <key>Label</key>
-      <string>com.ivledaemon</string>
-      <key>ProgramArguments</key>
-      <array>
-        <string>/Library/MyApp/myapp.app/Contents/MacOS/myapp</string>
-        <string>/usr/local/bin/ivledaemon</string>
-      </array>
-      <key>RunAtLoad</key>
-      <true/>
-    </dict>
-    </plist>
+    cat > /Library/LaunchAgents/com.ivledaemon.plist << EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.ivledaemon</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/ivledaemon</string>
+    <string>start</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>
 EOT
     if [[ $? -eq 0 ]]; then
       echo "ivledaemon will automatically run at startup"
