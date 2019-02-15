@@ -1,0 +1,59 @@
+#!/bin/bash
+
+if [[ "$#" -eq 0 ]]; then
+  screen -ls
+elif [[ "$#" -eq 1 ]]; then
+  screen -wipe &>/dev/null
+  if [[ "$1" == "start" ]]; then
+    screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill &>/dev/null
+    screen -S ivled -dm bash -c "sleep 1 && while true; do ivled ; sleep 300; done"
+    if [[ $? -eq 0 ]]; then
+      echo "ivled is running in the background. You may close this terminal."
+    fi
+  elif [[ "$1" == "stop" ]]; then
+    screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill &>/dev/null
+    if [[ $? -eq 0 ]]; then
+      echo "ivled stopped"
+    fi
+  elif [[ "$1" == "autostart" ]]; then
+    sudo cat > /Library/LaunchAgents/com.ivledaemon.plist << EOT
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+    <dict>
+      <key>Label</key>
+      <string>com.ivledaemon</string>
+      <key>ProgramArguments</key>
+      <array>
+        <string>/Library/MyApp/myapp.app/Contents/MacOS/myapp</string>
+        <string>/usr/local/bin/ivledaemon</string>
+      </array>
+      <key>RunAtLoad</key>
+      <true/>
+    </dict>
+    </plist>
+EOT
+    if [[ $? -eq 0 ]]; then
+      echo "ivledaemon will automatically run at startup"
+    fi
+  elif [[ "$1" == "autostop" ]]; then
+    launchctl unload -w /Library/LaunchAgents/com.ivledaemon.plist
+    rm /Library/LaunchAgents/com.ivledaemon.plist
+    if [[ $? -eq 0 ]]; then
+      echo "ivledaemon will not automatically run at startup"
+    fi
+  else
+    echo "command \"$1\" not recognized\n"
+    echo "How to use ivledaemon"
+    echo "---------------------"
+    echo "ivledaemon       : show running ivled session (if any)"
+    echo "ivledaemon start : run ivled in the background. You may close the terminal."
+    echo "ivledaemon stop  : stop all ivled sessions (if any)"
+  fi
+else
+  echo "How to use ivledaemon"
+  echo "---------------------"
+  echo "ivledaemon       : show running ivled session (if any)"
+  echo "ivledaemon start : run ivled in the background. You may close the terminal."
+  echo "ivledaemon stop  : stop all ivled sessions (if any)"
+fi
