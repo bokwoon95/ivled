@@ -229,6 +229,7 @@ func ivleWalk(modulecode string, filedir string, hf homoFolder) {
 		}
 	} else if hf.FolderName != "" { // Means this is a Folder
 		disdir := filedir + fpdlm + hf.FolderName
+		ignoredir := false
 		if !strings.Contains(strings.ToLower(hf.FolderName), "submission") && !ivleconfig.ExcludedFilePaths[disdir] {
 			fmt.Println("Folder      :", disdir+"/")
 			createDirIfNotExist(disdir)
@@ -237,9 +238,12 @@ func ivleWalk(modulecode string, filedir string, hf homoFolder) {
 			}
 		} else {
 			fmt.Println("Ignored     :", disdir+"/")
+			ignoredir = true
 		}
-		for _, hf1 := range hf.Files {
-			ivleWalk(modulecode, disdir, hf1)
+		if !ignoredir {
+			for _, hf1 := range hf.Files {
+				ivleWalk(modulecode, disdir, hf1)
+			}
 		}
 	} else if hf.FileName != "" { // Means this is a File
 		disfile := filedir + fpdlm + hf.FileName
